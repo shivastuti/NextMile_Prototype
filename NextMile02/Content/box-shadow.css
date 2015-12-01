@@ -1,0 +1,26 @@
+body {background-image:
+                   url("http://i454.photobucket.com/albums/qq268/Juliathesparklygirl/I%20Love%20it%20backgrounds/AGratefulHeart.jpg"); 
+              background-position: center; 
+              background-repeat: no-repeat; 
+              background-attachment: fixed; }
+.firsttext
+{
+text-align:center;
+color:red;
+} 
+.sectext
+{
+text-align:center;
+color:teal;
+}
+.home_wrap {
+    margin: 0 auto;
+    margin-top: 1px;
+    width: 730px;
+    height: auto;
+    position: relative;
+    -webkit-box-shadow: 0 0 20px #0e0ef3;
+    box-shadow: 0 0 20px #000;
+    border: 1px solid black;
+    
+}

@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+    @*Website Title & Description for Search Engine purposes -->*@ 
+    <meta name="description" content="">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    @*<!-- Mobile viewport optimized -->*@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @*<!-- Bootstrap CSS -->*@
+    <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/bootstrap-glyphicons.css" rel="stylesheet">
+    @*<!-- Custom CSS -->*@
+    <link href="~/Scripts/css/styles.css" rel="stylesheet">
+    @*<!-- Include Modernizr, before any other Javascript -->*@
+    <script src="~/Scripts/javascript/modernizr-2.6.2.min.js"></script>
+    @*<!-- This code piece is taken from Facebook Developers-->*@
+    <script src="~/Scripts/javascript/index.js">
+    </script>             
+</head>
+<body onload="noBack();">
+    onpageshow="if (event.persisted) noBack();" onunload="">
+    @*Window Container*@
+    <div class="container" id="main">
+        @*Navigation Bar*@
+        <div class="navbar navbar-fixed-top bkhead">
+            <div class="container">
+                <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                <button class="navbar-toggle" data-target=".navbar-responsive-collapse" data-toggle="collapse" type="button">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="nav-collapse collapse navbar-responsive-collapse bkhead">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li class="nav navbar-nav">
+                            <a href="#" target="_blank">Documentation</a>
+                        </li>
+                    </ul>
+                </div><!-- end nav-collapse -->
+
+            </div><!-- end container -->
+        </div> <!--end navbar -->
+        @*FaceBook Login*@
+        <div class="pull-right glibc">
+            <div id="auth-status">
+                <div id="auth-loggedout">
+                    <div class="fb-login-button" autologoutlink="true" scope="email,user_checkins">
+                        Login
+                    </div>
+                </div>
+                <div id="auth-loggedin" style="display: none">
+                    Hi, <span id="auth-displayname"></span>(<a href="index.html" id="auth-logoutlink">logout</a>)
+                    <span><a href="user.aspx"> View Account</a></span>
+                </div>
+            </div>
+        </div>
+        @*Map Search - A call to RenderBody()*@
+        <div class="row glib" id="bigCallout">
+            <div class="col-12">
+                <div class="well sbig">
+                    <div class="page-header">
+                        <h1 class="left"> NEXTMILE -Search your favorite food truck by location</h1>
+                    </div>
+                    <p class="lead">
+                        .
+                    </p>
+
+                    <div>
+                        @RenderBody()
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    @*Footer*@
+    <footer class="foot">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6>Copyright &copy; 2015 {NextMile}</h6>
+                    </div><!-- end col-sm-2 -->
+
+
+                    <div class="col-sm-3">
+                        <h6>Navigation</h6>
+                        <ul class="unstyled">
+                            <li><a href="#">Home</a></li>
+
+                        </ul>
+                    </div><!-- end col-sm-2 -->
+
+                    <div class="col-sm-3">
+
+                        <ul class="unstyled"></ul>
+                    </div><!-- end col-sm-2 -->
+
+                    <div class="col-sm-3">
+                        <h6>Coded with <span class="glyphicon glyphicon-heart"></span> by The NextMile Team</h6>
+                    </div><!-- end col-sm-2 -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </footer>
+    <!-- All Javascript at the bottom of the page for faster page loading -->
+
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <!-- If no online access, fallback to our hardcoded version of jQuery -->
+    <script>window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
+
+    <!-- Bootstrap JS -->
+    <script src="javascript/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="javascript/script.js"></script>
+</body>
+</html>
