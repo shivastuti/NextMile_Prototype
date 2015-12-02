@@ -1,4 +1,4 @@
-﻿/*This javascript will ensure that we're subscribed to login
+/*This javascript will ensure that we're subscribed to login
 event on which we'll submit fb access token to our controller 
 and save it in session. Also, on each window load, we'll check
 for fb login status and alert user accordingly.
@@ -82,7 +82,7 @@ function InitialiseFacebook(appId)
                                     success: function (res)
                                     {
                                         window.location.reload();
-                                        $('#Profile').load('/Account/UserDetails');
+                                      //('#Profile').load('/Account/UserDetails');
                                       
                                     }
                                 });
