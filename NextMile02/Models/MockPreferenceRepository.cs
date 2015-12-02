@@ -5,31 +5,26 @@ using System.Web;
 
 namespace NextMile02.Models
 {
-    /// <summary>
-    ///    void CreateNewPreference(Preference preferenceToCreate);
-    ///    void UpdatePreference(string userid, string truckname, int newPreference);
-    ///    IEnumerable<Preference> GetAllPreferences();
-    ///    IEnumerable<Preference> GetPreferencesForUser(string userid);
-    ///    int SaveChanges();
-    /// </summary>
-    public class DB_PreferenceRepository : IPreferenceRepository
+    public class MockPreferenceRepository : IPreferenceRepository
     {
-        // NextMile DB Context
-        private static NextMileDB1DataContext NextMileDB = new NextMileDB1DataContext();
+        private List<Preference.PreferenceData> _db = new List<Preference.PreferenceData>();
+
+        public MockPreferenceRepository()
+        { }
+
+        public MockPreferenceRepository(List<Preference.PreferenceData> preferences)
+        {
+            _db = preferences;
+        }
+
+        public Exception ExceptionToThrow { get; set; }
 
         public IEnumerable<Preference.PreferenceData> GetAllPreferences()
         {
             // Obtain User Preferences
-            var preferences = (from pref in NextMileDB.UserProfileTest1s
-                               select new Preference.PreferenceData
-                               {
-                                   Id = pref.Id,
-                                   userid = pref.userid,
-                                   truckname = pref.truckname,
-                                   preference = pref.preference
-                               }
+            var preferences = (from pref in _db
+                               select pref
                                ).AsEnumerable();
-
 
             return preferences;
         }
@@ -37,14 +32,9 @@ namespace NextMile02.Models
         public IEnumerable<Preference.PreferenceData> GetPreferencesForUser(string userid)
         {
             // Obtain User Preferences for Specified User
-            var preferences = (from pref in NextMileDB.UserProfileTest1s
+            var preferences = (from pref in _db
                                where pref.userid == userid
-                               select new Preference.PreferenceData {
-                                   Id = pref.Id,
-                                   userid = pref.userid,
-                                   truckname = pref.truckname,
-                                   preference = pref.preference
-                               }
+                               select pref
                                ).AsEnumerable();
 
             return preferences;
@@ -53,16 +43,10 @@ namespace NextMile02.Models
         public Preference.PreferenceData GetPreferenceForUserAndTruck(string userid, string truckName)
         {
             // Obtain User Preferences for Specified User
-            var preference = (from pref in NextMileDB.UserProfileTest1s
+            var preference = (from pref in _db
                               where pref.userid == userid && pref.truckname == truckName
-                              select new Preference.PreferenceData
-                              {
-                                  Id = pref.Id,
-                                  userid = pref.userid,
-                                  truckname = pref.truckname,
-                                  preference = pref.preference
-                              }
-                               ).FirstOrDefault();
+                              select pref
+                              ).FirstOrDefault();
 
             return preference;
         }
@@ -72,7 +56,7 @@ namespace NextMile02.Models
             int newPreference = Int32.Parse(vote);
 
             // Obtain User Preferences
-            var allPreferences = (from pref in NextMileDB.UserProfileTest1s
+            var allPreferences = (from pref in _db
                                   select pref);
 
             var userPreferences = (from pref in allPreferences
@@ -82,14 +66,14 @@ namespace NextMile02.Models
             // If no prior preference, write a new one
             if (userPreferences.Count() < 1)
             {
-                UserProfileTest1 newpref = new UserProfileTest1();
+                Preference.PreferenceData newpref = new Preference.PreferenceData();
+
                 newpref.Id = allPreferences.Count();
                 newpref.userid = userid;
                 newpref.truckname = truckname;
                 newpref.preference = vote == "1" ? 1 : 2;
 
-                NextMileDB.UserProfileTest1s.InsertOnSubmit(newpref);
-                NextMileDB.SubmitChanges();
+                _db.Add(newpref);
             }
             else
             {
@@ -108,7 +92,6 @@ namespace NextMile02.Models
                         oldpref.preference = vote == "1" ? 1 : 2;
                         newPreference = (int)oldpref.preference;
                     }
-                    NextMileDB.SubmitChanges();
                 }
             }
 

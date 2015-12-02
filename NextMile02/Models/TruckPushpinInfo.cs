@@ -23,6 +23,9 @@ namespace NextMile02.Models
         public string meal { get; set; }
         public int? preference { get; set; }
 
+        public TruckPushpinInfo()
+        { }
+
         public TruckPushpinInfo(string latitude, string longitude, string truckName, string location, string website)
         {
             this.latitude = Convert.ToDouble(latitude);
@@ -30,6 +33,7 @@ namespace NextMile02.Models
             this.truckName = truckName;
             this.location = location;
             this.website = website;
+            this.preference = null;
         }
 
         public TruckPushpinInfo(TruckEvent truckEvent)
@@ -37,9 +41,8 @@ namespace NextMile02.Models
             this.truckName = truckEvent.Name;
             this.location = truckEvent.Neighborhood;
             this.website = truckEvent.Url;
-            Location loc = MvcApplication.locations[truckEvent.Neighborhood];
-            this.latitude = Convert.ToDouble(loc.latitude);
-            this.longitude = Convert.ToDouble(loc.longitude);
+            this.latitude = Convert.ToDouble(truckEvent.Coordinates.latitude);
+            this.longitude = Convert.ToDouble(truckEvent.Coordinates.longitude);
             this.meal = truckEvent.Time;
             this.preference = null;
         }
@@ -49,9 +52,8 @@ namespace NextMile02.Models
             this.truckName = truckEvent.Name;
             this.location = truckEvent.Neighborhood;
             this.website = truckEvent.Url;
-            Location loc = MvcApplication.locations[truckEvent.Neighborhood];
-            this.latitude = Convert.ToDouble(loc.latitude);
-            this.longitude = Convert.ToDouble(loc.longitude);
+            this.latitude = Convert.ToDouble(truckEvent.Coordinates.latitude);
+            this.longitude = Convert.ToDouble(truckEvent.Coordinates.longitude);
             this.meal = truckEvent.Time;
             this.preference = preference;
         }

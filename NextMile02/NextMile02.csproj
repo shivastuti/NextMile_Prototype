@@ -127,11 +127,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\FacebookLocation.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\FacebookUserModel.cs" />
+    <Compile Include="Models\ICurrentUser.cs" />
     <Compile Include="Models\IPreferenceRepository.cs" />
     <Compile Include="Models\ITruckDataRepository.cs" />
+    <Compile Include="Models\MockCurrentUser.cs" />
+    <Compile Include="Models\MockPreferenceRepository.cs" />
+    <Compile Include="Models\MockTruckDataRepository.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\PreferenceData.cs" />
     <Compile Include="Models\PreferenceRepository.cs" />

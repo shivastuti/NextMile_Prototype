@@ -1,10 +1,9 @@
-﻿using NextMile02.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using NextMile02.Models;
 
 namespace NextMile02.Controllers
 {
@@ -16,25 +15,36 @@ namespace NextMile02.Controllers
         // Truck Events repository
         ITruckDataRepository _truckEventsSource;
 
+        // Current User Id
+        ICurrentUser _currentUser;
+
         // Cache of Current Truck Events.  Removing for now unless necessary for performance.
         //static List<Models.TruckEvent> currentEvents;
 
         // Test userid for debugging purposes
         static string testuser = null;
 
-        public HomeController() : this(new DB_PreferenceRepository(), new TruckDataRepository()) { }
+        public HomeController()
+            : this(
+                new DB_PreferenceRepository(),
+                new TruckDataRepository(),
+                new CurrentUser()) { }
 
-        public HomeController(IPreferenceRepository preferenceStore, ITruckDataRepository truckEventsSource)
+        public HomeController(
+            IPreferenceRepository preferenceStore,
+            ITruckDataRepository truckEventsSource,
+            ICurrentUser currentUser)
         {
             _preferenceStore = preferenceStore;
             _truckEventsSource = truckEventsSource;
+            _currentUser = currentUser;
         }
 
-        public ActionResult Index()
+        public ViewResult Index(string setDay = "", string setMeal = "")
         {
 
             // Obtain Facebook UserId from Session state uid
-            string loggedinuser = (String)Session["uid"];
+            string loggedinuser = _currentUser.UserId();
 
             // Use logged in user if available
             string userid =
@@ -42,7 +52,7 @@ namespace NextMile02.Controllers
                 testuser;
 
             // Obtain list of current events
-            var currentEvents = getCurrentEvents();
+            var currentEvents = getCurrentEvents(setDay, setMeal);
 
             List<Models.TruckPushpinInfo> currentTruckPins = null;
 
@@ -78,7 +88,7 @@ namespace NextMile02.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewData["CurrentTruckPins"] = serializer.Serialize(currentTruckPins);
             ViewData["CurrentNeighborhoods"] = currentNeighborhoods;
-            return View();
+            return View("Index", ViewData);
         }
 
         //This method needs refactoring
@@ -110,7 +120,7 @@ namespace NextMile02.Controllers
             return currentTruckPins;
         }
 
-        private List<Models.TruckEvent> getCurrentEvents()
+        private List<Models.TruckEvent> getCurrentEvents(string setDay, string setMeal)
         {
             // Determine today's day of week
             string today = DateTime.Now.DayOfWeek.ToString();
@@ -121,9 +131,15 @@ namespace NextMile02.Controllers
                 DateTime.Now.Hour < 15 ? "Lunch" :
                 DateTime.Now.Hour < 21 ? "Dinner" : "Breakfast"; //For testing changed
 
-            // Hardcode any date/meal values here for testing
+            // Hardcode any date/meal values here for testing/debugging
             today = "Wednesday";
             meal = "Lunch";
+
+            // For Unit Testing
+            if (setDay != "")
+                today = setDay;
+            if (setMeal != "")
+                meal = setMeal;
 
             // Obtain ALL truck events by scraping cityofboston.gov
             List<Models.TruckEvent> allEvents = _truckEventsSource.GetAllTruckData();
@@ -136,13 +152,13 @@ namespace NextMile02.Controllers
         }
 
         [HttpPost]
-        public ActionResult FilterNeighborhood(String selection)
+        public JsonResult FilterNeighborhood(String selection, string setDay = "", string setMeal = "")
         {
             // Obtain neighborhood from dropdownlist input
             string neighborhood = selection.Trim('"');
 
             // Obtain Facebook UserId from Session state uid
-            string loggedinuser = (String)Session["uid"];
+            string loggedinuser = _currentUser.UserId();
 
             // Use logged in user if available
             string userid =
@@ -150,7 +166,7 @@ namespace NextMile02.Controllers
                 testuser;
 
             // Obtain list of current events
-            var currentEvents = getCurrentEvents();
+            var currentEvents = getCurrentEvents(setDay, setMeal);
 
             List<Models.TruckPushpinInfo> currentTruckPins = null;
             if (userid != null)
@@ -185,19 +201,21 @@ namespace NextMile02.Controllers
                                   select truckPin).ToList();
             }
 
-            //Decluttering pushpins
+            // Declutter pushpins
             localTruckPins = OffsetLatitudeToEachTruckWithSameLoc(localTruckPins);
+
+            // Return filtered truck pins
             return Json(localTruckPins, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult VoteFoodTruck(String foodTruckName, String vote)
+        public JsonResult VoteFoodTruck(String foodTruckName, String vote)
         {
             // Obtain neighborhood from dropdownlist input
             string truckName = foodTruckName.Trim('"');
 
             // Obtain Facebook UserId from Session state uid
-            string loggedinuser = (String)Session["uid"];
+            string loggedinuser = _currentUser.UserId();
 
             // Use logged in user if available
             string userid =
@@ -207,7 +225,7 @@ namespace NextMile02.Controllers
             // Note: we can remove this check once we remove this method from anonymous users UI.
             int userPreferenceAfter = -1;
             var message = "";
-            var sucessVal = false;
+            var successVal = false;
             int? color = Convert.ToInt32(vote); //should retain old value as it is in case of error
             if (userid != null)
             {
@@ -215,34 +233,32 @@ namespace NextMile02.Controllers
                 userPreferenceAfter = _preferenceStore.UpdatePreference(userid, truckName, vote);
                 if (userPreferenceAfter != -1)
                 {
-                    //Sucess
+                    // Success
                     // Use updated user preference to pass updated color to view                    
                     message = "Preferences Updated";
-                    sucessVal = true;
+                    successVal = true;
                     color = userPreferenceAfter;
-                    //json = "{\"newIconColor\":\"" + color.ToString() + "\"}";
                 }
                 else
                 {
-                    sucessVal = false;
+                    successVal = false;
                     message = "Preferences Not Saved Sucessfully";
                 }
             }
             else
             {
-                sucessVal = false;
+                successVal = false;
                 message = "Log In to use this feature";
             }
 
-
-            return Json(new { sucess = sucessVal, message = message, newIconColor = color });
+            return Json(new { success = successVal, message = message, newIconColor = color });
         }
 
-        public ActionResult About()
+        public ViewResult About()
         {
             ViewBag.Message = "NextMile team. Northeastern University";
 
-            return View();
+            return View("About", ViewBag);
         }
     }
 }

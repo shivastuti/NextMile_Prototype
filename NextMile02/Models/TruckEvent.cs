@@ -13,7 +13,7 @@ namespace NextMile02.Models
         public string Day { get; set; }
         public string Time { get; set; }
         public string Neighborhood { get; set; }
-        public string Coordinates { get; set; }
+        public Location Coordinates { get; set; }
 
         public TruckEvent()
         { }
@@ -25,6 +25,7 @@ namespace NextMile02.Models
             this.Time = html.Substring(html.IndexOf("<td class=\"tod\">") + 16, (html.IndexOf("</td>", html.IndexOf("<td class=\"tod\">")) - html.IndexOf("<td class=\"tod\">") - 16));
             this.Url = html.Substring(html.IndexOf("<td class=\"com\">") + 25, (html.IndexOf('>', (html.IndexOf("<td class=\"com\">") + 25)) - html.IndexOf("<td class=\"com\">") - 26));
             this.Neighborhood = html.Substring(html.IndexOf("</script>") + 9, (html.LastIndexOf("</td>") - html.IndexOf("</script>") - 9));
+            this.Coordinates = MvcApplication.locations != null ? MvcApplication.locations[Neighborhood] : null;
             //this.Print();
         }
 
