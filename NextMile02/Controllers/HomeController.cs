@@ -145,10 +145,74 @@ namespace NextMile02.Controllers
             List<Models.TruckEvent> allEvents = _truckEventsSource.GetAllTruckData();
 
             // Obtain CURRENT truck events by filtering to current day/time
-            List<Models.TruckEvent> currentEvents = (from te in allEvents
-                                                     where te.Day == today && te.Time == meal
-                                                     select te).ToList();
-            return currentEvents;
+            List<Models.TruckEvent> selectedEvents = (from te in allEvents
+                                                      where te.Day == today && te.Time == meal
+                                                      select te).ToList();
+            return selectedEvents;
+        }
+
+        [HttpPost]
+        public JsonResult FilterTrucks(string neighborhood = "", string truckname = "", string day = "", string meal = "")
+        {
+            // Obtain Facebook UserId from Session state uid if logged in
+            string loggedinuser = _currentUser.UserId();
+
+            // Use logged in user if available
+            string userid =
+                loggedinuser != null ? loggedinuser :
+                testuser;
+
+            // Obtain selections from dropdownlist inputs
+            neighborhood = neighborhood.Trim('"');
+            truckname = truckname.Trim('"');
+            day = day.Trim('"');
+            meal = meal.Trim('"');
+
+            // Obtain list of events from specified meal
+            var selectedEvents = getCurrentEvents(day, meal);
+
+            // Filter by neighborhood if required
+            if (! neighborhood.Equals("Show All", StringComparison.Ordinal))
+            {
+                // Obtain list of current Truck events for selected neighborhood
+                selectedEvents = (from truck in selectedEvents
+                                  where String.Compare(truck.Neighborhood, neighborhood, true) == 0
+                                  select truck).ToList();
+            }
+
+            // Filter by TruckName if required
+            if (truckname != "")
+            {
+                // Obtain list of current Truck events for selected truck name
+                selectedEvents = (from truck in selectedEvents
+                                  where String.Compare(truck.Name, truckname, true) == 0
+                                  select truck).ToList();
+            }
+
+            List<Models.TruckPushpinInfo> selectedTruckPins = null;
+            if (userid != null)
+            {
+                // Obtain User Preferences
+                var preferences = _preferenceStore.GetPreferencesForUser(userid);
+
+                // Obtain list of current Truck PushPins for view, left-outer join with user preferences
+                //System.Data.SqlClient.SqlException - To be handled
+                selectedTruckPins = (from te in selectedEvents
+                                     join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
+                                     from profile in tempjoin.DefaultIfEmpty()
+                                     select new Models.TruckPushpinInfo(te, profile == null ? null : profile.preference)).ToList();
+            }
+            else
+            {
+                selectedTruckPins = (from te in selectedEvents
+                                     select new Models.TruckPushpinInfo(te)).ToList();
+            }
+
+            // Declutter pushpins
+            selectedTruckPins = OffsetLatitudeToEachTruckWithSameLoc(selectedTruckPins);
+
+            // Return filtered truck pins
+            return Json(selectedTruckPins, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

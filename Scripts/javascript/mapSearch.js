@@ -268,14 +268,14 @@ function btnVoteHandler(pushpin, vote) {
         dataType: "json",
         data: "foodTruckName=" + encodeURIComponent(JSON.stringify(truckName)) + "&vote=" + encodeURIComponent(vote),
         success: function (data) {
-            if (data.sucess) {
+            if (data.success) {
                 changePushPinColor(pushpin, data);
             } else {
                 alert(data.message);
             }
         },
         error: function () {
-            alert("Preference Not Sucessfully Saved"); // will be removed if everything works
+            alert("Preference Not Successfully Saved"); // will be removed if everything works
         }
     });
 }

@@ -8,8 +8,6 @@ using NextMile02.Models;
 
 namespace NextMile02.Tests.Controllers
 {
-
-
     [TestClass]
     public class HomeControllerTest
     {
@@ -539,6 +537,47 @@ namespace NextMile02.Tests.Controllers
             Assert.AreEqual("SoWa Open Market, 500 Harrison Avenue",    pins[1].location);
             Assert.AreEqual((Double)(-71.0674873),                      pins[1].longitude);
             Assert.AreEqual(2,                                          pins[1].preference);
+        }
+
+        [TestMethod]
+        public void FilterTrucks_Get_1Truckname_Anonymous_2Event2Neighborhood_Validate_1Pin()
+        {
+            // Arrange
+            List<Models.TruckEvent> testEvents = new List<TruckEvent>()
+            {
+                new TruckEvent() { 
+                    Name = "TestTruck1",
+                    Url = "www.testtruck1.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "NEU, on Opera Place at Huntington Ave",
+                    Coordinates = new Location("42.3398106,-71.0913604")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck2",
+                    Url = "www.testtruck2.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "SoWa Open Market, 500 Harrison Avenue",
+                    Coordinates = new Location("42.3425311,-71.0674873")
+                },
+            };
+            var controller = new HomeController(
+                new MockPreferenceRepository(),
+                new MockTruckDataRepository(testEvents),
+                new MockCurrentUser());
+
+            // Act
+            JsonResult result = controller.FilterTrucks("Show All", truckname: "TestTruck2", day: "Friday", meal: "Lunch");
+
+            // Assert
+            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            Assert.IsNotNull(pins);
+            Assert.AreEqual(pins.Count, 1);
+            Assert.AreEqual(pins[0].truckName, "TestTruck2");
+            Assert.AreEqual(pins[0].location, "SoWa Open Market, 500 Harrison Avenue");
+            Assert.AreEqual(pins[0].longitude, (Double)(-71.0674873));
+            Assert.AreEqual(pins[0].preference, null);
         }
 
         [TestMethod]
