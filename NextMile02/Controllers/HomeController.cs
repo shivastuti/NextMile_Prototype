@@ -79,7 +79,9 @@ namespace NextMile02.Controllers
             List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
                                                               group te by te.Neighborhood into n
                                                               select new Models.Neighborhood(n.Key))
-                                                              .Distinct().ToList();
+                                                              .Distinct().OrderBy(s=> s.neighborhood).ToList();
+
+            //sort Neighborhood Names alphabetically
             //Inserts Show all Locations to dropdown List
             currentNeighborhoods.Insert(0, new Models.Neighborhood("Show All"));
 
@@ -129,11 +131,11 @@ namespace NextMile02.Controllers
             string meal =
                 DateTime.Now.Hour < 10 ? "Breakfast" :
                 DateTime.Now.Hour < 15 ? "Lunch" :
-                DateTime.Now.Hour < 21 ? "Dinner" : "Breakfast"; //For testing changed
+                DateTime.Now.Hour < 22 ? "Dinner" : "Late Night"; //Aligned according to city of boston
 
             // Hardcode any date/meal values here for testing/debugging
-            today = "Wednesday";
-            meal = "Lunch";
+            //today = "Wednesday";
+            //meal = "Lunch";
 
             // For Unit Testing
             if (setDay != "")
@@ -216,10 +218,12 @@ namespace NextMile02.Controllers
         }
 
         [HttpPost]
-        public JsonResult FilterNeighborhood(String selection, string setDay = "", string setMeal = "")
+        public JsonResult FilterNeighborhood(String neighborhoodSelected, string daySelected = "", string mealSelected = "")
         {
             // Obtain neighborhood from dropdownlist input
-            string neighborhood = selection.Trim('"');
+            string neighborhood = neighborhoodSelected.Trim('"');
+            string tempDaySelected = daySelected.Trim('"');
+            string tempMealSelected = mealSelected.Trim('"');
 
             // Obtain Facebook UserId from Session state uid
             string loggedinuser = _currentUser.UserId();
@@ -230,7 +234,7 @@ namespace NextMile02.Controllers
                 testuser;
 
             // Obtain list of current events
-            var currentEvents = getCurrentEvents(setDay, setMeal);
+            var currentEvents = getCurrentEvents(tempDaySelected, tempMealSelected);
 
             List<Models.TruckPushpinInfo> currentTruckPins = null;
             if (userid != null)

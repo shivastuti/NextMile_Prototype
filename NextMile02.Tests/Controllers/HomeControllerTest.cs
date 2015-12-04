@@ -225,7 +225,7 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -270,7 +270,7 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -313,7 +313,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -364,7 +364,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -407,7 +407,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -458,7 +458,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -527,7 +527,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", setDay: "Friday", setMeal: "Lunch");
+            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;

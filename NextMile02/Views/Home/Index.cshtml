@@ -4,7 +4,7 @@
 
 <body>
     @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
-    <div class="container glib" id="indexcontainer"> 
+    <div class="container glib" id="indexcontainer">
         @{
             ViewBag.Title = "NextMile - The FoodTruck Search Engine";
             Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,26 +15,38 @@
         <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
         <p class="hidden">Facebook User Id: @Session["uid"]</p>
         <p class="hidden">Flag : @Session["flag"] </p>
-          
-           
+
+
         <div id="Profile"></div>
-    <div class="row glibc">
-             
-                 <div class="col-sm-10 padded-custom">
-                     <select class="form-control" id="neighbourhoodList" onchange="RenderSpecificTrucksNew()">
-                         @foreach (var std in ((List<NextMile02.Models.Neighborhood>)ViewData["CurrentNeighborhoods"]))
-                         {
-                             <option value="@std.neighborhood">@std.neighborhood</option>
-                         }
-                     </select>
-                 </div>
-         
-    </div>              
-        <div id="myMap" class="col-sm-12 glibc"></div>     
-        <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />    
-        <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />    
-  </div>
-    
+        <div class="row glibc">
+            <div class="col-sm-2 padded-custom">
+                <select class="form-control" id="foodTruckName" onchange="RenderSpecificTrucksNew()">
+                    <option disabled value=''>Select by Food Truck</option>
+                    <!--TBD-->
+                </select>
+            </div>
+            <div class="col-sm-2 padded-custom">
+                <select class="form-control" id="mealTime" onchange="RenderSpecificTrucksNew()">
+                </select>
+            </div>
+            <div class="col-sm-2 padded-custom">
+                <select name="By Day" class="form-control" id="dayOfWeek" onchange="RenderSpecificTrucksNew()">
+                </select>
+            </div>
+            <div class="col-sm-5 padded-custom">                
+                <select class="form-control" id="neighbourhoodList" onchange="RenderSpecificTrucksNew()">
+                    @foreach (var std in ((List<NextMile02.Models.Neighborhood>)ViewData["CurrentNeighborhoods"]))
+                    {
+                        <option value="@std.neighborhood">@std.neighborhood</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div id="myMap" class="col-sm-12 glibc"></div>
+        <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
+        <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
+    </div>
+
 </body>
 
 @*Javascript calls*@
