@@ -36,6 +36,9 @@ $(document).ready(function () {
                     displayClusteredInfoBox(pushpin, cluster);
                 }
             });
+            Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
+                    hideClusteredInfoBox(pushpin, cluster);
+            });
         },
         onPinToMap: function (pushpin) {
             Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
@@ -47,6 +50,9 @@ $(document).ready(function () {
                 if (e.targetType == 'pushpin') {
                     displayInfobox(pushpin);
                 }
+            });
+            Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
+                    hideInfobox();                
             });
         }
     });
@@ -342,13 +348,13 @@ function infoboxAdjustToMapView(pushpin) {
     }
 }
 
-function hideInfobox(pushpin) {
+function hideInfobox() {
     infobox.setOptions({ visible: false });
-    if (bestview != null) {
+    /*if (bestview != null) {
         map.setView({
             bounds: bestview
         });
-    }
+    }*/
 }
 
 //function to Upvote or Downvote a truck
