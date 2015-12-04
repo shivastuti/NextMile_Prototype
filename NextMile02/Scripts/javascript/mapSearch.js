@@ -36,6 +36,11 @@ $(document).ready(function () {
                     displayClusteredInfoBox(pushpin, cluster);
                 }
             });
+            Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
+                if (e.targetType == 'pushpin') {
+                    displayClusteredInfoBox(pushpin, cluster);
+                }
+            });
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
                     hideClusteredInfoBox(pushpin, cluster);
             });
