@@ -4,8 +4,11 @@ var bestview = null;
 var pushPinWidth = 35;
 var pushPinHeight = 35;
 var showAll = 'Show All';
+var pinClusterer = null;
 
 $(document).ready(function () {
+    getTodayDateAndMealTime();
+
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -68,6 +71,96 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
     map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
     //render the clustered map
     pinClusterer.cluster(AllPushpinInfoData);
+
+    datalayer = pinClusterer.layer; 
+
+    // Utilize the user's location if available
+    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
+    locProvider.getCurrentPosition({ successCallback: ShowUserPosition }, { errorCallback: onPositionError });
+}
+
+// Shows the user's location as Pin
+// Zooms the map to current location
+// If we don't know user location, do nothing.
+// If known location but outside Boston, show pin but don't re-center
+// If known location INSIDE Boston, recenter and zoom to user's location
+function ShowUserPosition(user) {
+
+    // Recenter map if user is located in Boston
+    if (map.getBounds().contains(user.position.coords)) {
+        alert("You're in Boston!");
+        map.setView({
+            zoom: 15,
+            center: user.center
+        });
+    }
+    else {
+        alert("You're NOT in Boston!");
+        //set to Boston latitude and longitude
+        map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
+    }
+
+    // Create a Pushpin at the user's location
+    var userPushpin = new Microsoft.Maps.Pushpin(user.center);
+    userPushpin.Title = "You are Here";
+
+    // Add Infobox
+    userPinInfobox = new Microsoft.Maps.Infobox(userPushpin.getLocation(),
+        {
+            title: 'You are Here!',
+            width: 100, height: 50,
+            visible: true,
+            offset: new Microsoft.Maps.Point(0, 15)
+        });
+
+    Microsoft.Maps.Events.addHandler(userPushpin, 'mouseover', function (e) {
+        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
+    });
+
+    Microsoft.Maps.Events.addHandler(userPushpin, 'click', function (e) {
+        if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
+    });
+
+    Microsoft.Maps.Events.addHandler(userPushpin, 'viewchange', function (e) {
+        if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
+    });
+    map.entities.push(userPushpin);
+    map.entities.push(userPinInfobox);
+
+    //// Marks current location with a circle and sets its border width,
+    //// border color and body color
+    //geoLocationProvider.addAccuracyCircle(position.center, 30, 30, {
+    //    polygonOptions: {
+    //        strokeThickness: 2,
+    //        fillColor: new Microsoft.Maps.Color(200, 255, 128, 0),
+    //        strokeColor: new Microsoft.Maps.Color(255, 0, 128, 0)
+    //    }
+    //});
+}
+
+function displayUserInfobox(e) {
+    userPinInfobox.setOptions({ visible: true });
+}
+
+function hideUserInfobox(e) {
+    userPinInfobox.setOptions({ visible: false });
+}
+
+function onPositionError(err) {
+    switch (err.code) {
+        case 0:
+            alert("Unknown error");
+            break;
+        case 1:
+            alert("Browser Location settings are disabled by User.");
+            break;
+        case 2:
+            alert("Location data unavailable.");
+            break;
+        case 3:
+            alert("Location request timed out.");
+            break;
+    }
 }
 
 //display info box for clustered pushpins
@@ -87,12 +180,10 @@ function displayClusteredInfoBox(pushpin, cluster) {
         infoBoxHeight = 100 + (8 * numOfTrucks);
     }
 
-    for (i = 0; i < (numOfTrucks - 1); i++) {
+    for (i = 0; i < (numOfTrucks - 1) ; i++) {
         truckNames += cluster.truckNamesInCluster[i] + appendStr;
     }
     truckNames += cluster.truckNamesInCluster[numOfTrucks - 1];
-
-
 
     infobox.setOptions({
         title: infoBoxTitle,
@@ -164,7 +255,7 @@ function renderMap(PushpinInfoData) {
        So additional logic to go to default zoom level added when there in only one pushpin*/
     if (locationlist.length == 1) {
         map.setView({ center: locationlist[0], zoom: 17 });
-    } else {
+    } else if (locationlist.length > 1) {
         /*To determine the bounding box for the map that fits all trucks*/
         bestview = new Microsoft.Maps.LocationRect.fromLocations(locationlist);
         map.setView({
@@ -179,6 +270,7 @@ function displayInfoboxSettings(pushpin) {
     var infoBoxDesciption = pushpin.Description;
     var infoBoxTitle = pushpin.Title;
     var strLength = infoBoxDesciption.length + infoBoxTitle.length;
+    console.log(infoBoxTitle + " " + infoBoxDesciption);
 
     if (strLength > 70)
         infoBoxHeight = 160;
@@ -268,14 +360,14 @@ function btnVoteHandler(pushpin, vote) {
         dataType: "json",
         data: "foodTruckName=" + encodeURIComponent(JSON.stringify(truckName)) + "&vote=" + encodeURIComponent(vote),
         success: function (data) {
-            if (data.sucess) {
+            if (data.success) {
                 changePushPinColor(pushpin, data);
             } else {
                 alert(data.message);
             }
         },
         error: function () {
-            alert("Preference Not Sucessfully Saved"); // will be removed if everything works
+            alert("Preference Not Successfully Saved"); // will be removed if everything works
         }
     });
 }
@@ -305,42 +397,68 @@ function changePushPinColor(pushpin, data) {
     }
 }
 
-function RenderSpecificTrucksNew(e) {
-    var dropList = document.getElementById('neighbourhoodList');
-    var selectedLocation = dropList.options[dropList.selectedIndex].value;
+//initialse today date and time
+function getTodayDateAndMealTime() {
+    var todayDate = new Date();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var mealTimes = ['Breakfast', 'Lunch', 'Dinner', 'Late Night'];
+    var today = days[todayDate.getDay()];
+
+    var mealTime = "";
+    if (todayDate.getHours() >= 0 && todayDate.getHours() < 10)
+    { mealTime = "Breakfast"; }
+    else if (todayDate.getHours() >= 10 && todayDate.getHours() < 15)
+    { mealTime = "Lunch"; }
+    else if (todayDate.getHours() >= 15 && todayDate.getHours() < 22)
+    { mealTime = "Dinner"; }
+    else
+    { mealTime = "Late Night"; }
+
+    var dropdownListMealTime = document.getElementById('mealTime');
+    for (var i = 0; i < mealTimes.length; i++)
+    {
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = mealTimes[i];
+        dropdownListMealTime.options.add(optn);
+    }
+
+    var dropdownListDays = document.getElementById('dayOfWeek');
+    for (var i = 0; i < days.length; i++) {
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = days[i];
+        dropdownListDays.options.add(optn);
+    }
+
+    //set current values
+    dropdownListMealTime.value = mealTime;
+    dropdownListDays.value = today;
+
+}
+
+function RenderSpecificTrucksNew() {
+    var dropListNeighborhood = document.getElementById('neighbourhoodList');
+    var neighborhoodSelected = dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value;
+    var dropListMeal = document.getElementById('mealTime');
+    var mealSelected = dropListMeal.options[dropListMeal.selectedIndex].value;
+    var dropListDay = document.getElementById('dayOfWeek');
+    var daySelected = dropListDay.options[dropListDay.selectedIndex].value;
+
+    console.log(neighborhoodSelected + " " + mealSelected + " " + daySelected);
 
     $.ajax({
         url: "../../Home/FilterNeighborhood",
         type: "POST",
         dataType: "json",
-        data: "selection=" + JSON.stringify(selectedLocation),
+        data: "neighborhoodSelected=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&daySelected=" + JSON.stringify(daySelected) + "&mealSelected=" + JSON.stringify(mealSelected),
         success: function (PushpinFilteredData) {
             map.entities.clear();
-            if (dropList.options[dropList.selectedIndex].value === showAll) {
+            if (dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value === showAll) {
                 //Pin Clustered Map View
                 /*Show Clustered Pushpins Map view - For 'Show All' option*/
-                pinClusterer = new PinClusterer(map, {
-                    onClusterToMap: function (pushpin, cluster) {
-                        Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
-                            if (e.targetType == 'pushpin') {
-                                displayClusteredInfoBox(pushpin, cluster);
-                            }
-                        });
-                    },
-                    onPinToMap: function (pushpin) {
-                        Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
-                            if (e.targetType == 'pushpin') {
-                                displayInfobox(pushpin);
-                            }
-                        });
-                        Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
-                            if (e.targetType == 'pushpin') {
-                                displayInfobox(pushpin);
-                            }
-                        });
-                    }
-                });
-                renderPushpinClusteredMap(PushpinFilteredData, pinClusterer);
+                if (pinClusterer != null) {
+                    pinClusterer.reinitialize(map);
+                    renderPushpinClusteredMap(PushpinFilteredData, pinClusterer);
+                }
             } else {
                 //Zoomed in Map View
                 renderMap(PushpinFilteredData);

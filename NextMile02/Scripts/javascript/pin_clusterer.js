@@ -75,7 +75,13 @@ Licence
 	};
 
 	PinClusterer.prototype = {
-		//
+	    reinitialize: function (map) {
+	        this.map = map;
+	        this.layer = new mm.EntityCollection();
+	        this.map.entities.push(this.layer);
+	        this.loaded = true;
+	    },
+
 		cluster: function (truckPinData) {
 			if (!this.loaded) return;
 			if (!truckPinData) {

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="NextMileDB-Web.config Connection String" description="NextMileDB Connection String used in web.config by the application to access the database." defaultValue="Data Source=ec2-52-26-71-96.us-west-2.compute.amazonaws.com;Initial Catalog=Nextmile02;User ID=nextmile;Password=nextmile;Connect Timeout=60" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\Smitha\\Documents\\Visual\ Studio\ 2013\\Projects\\NextMile02\\NextMile02\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='NextMileDB']/@connectionString" />
-  </parameter>
-</parameters>

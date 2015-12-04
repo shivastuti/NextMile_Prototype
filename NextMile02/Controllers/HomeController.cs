@@ -79,7 +79,9 @@ namespace NextMile02.Controllers
             List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
                                                               group te by te.Neighborhood into n
                                                               select new Models.Neighborhood(n.Key))
-                                                              .Distinct().ToList();
+                                                              .Distinct().OrderBy(s=> s.neighborhood).ToList();
+
+            //sort Neighborhood Names alphabetically
             //Inserts Show all Locations to dropdown List
             currentNeighborhoods.Insert(0, new Models.Neighborhood("Show All"));
 
@@ -129,11 +131,11 @@ namespace NextMile02.Controllers
             string meal =
                 DateTime.Now.Hour < 10 ? "Breakfast" :
                 DateTime.Now.Hour < 15 ? "Lunch" :
-                DateTime.Now.Hour < 21 ? "Dinner" : "Breakfast"; //For testing changed
+                DateTime.Now.Hour < 22 ? "Dinner" : "Late Night"; //Aligned according to city of boston
 
             // Hardcode any date/meal values here for testing/debugging
-            today = "Wednesday";
-            meal = "Lunch";
+            //today = "Wednesday";
+            //meal = "Lunch";
 
             // For Unit Testing
             if (setDay != "")
@@ -145,17 +147,83 @@ namespace NextMile02.Controllers
             List<Models.TruckEvent> allEvents = _truckEventsSource.GetAllTruckData();
 
             // Obtain CURRENT truck events by filtering to current day/time
-            List<Models.TruckEvent> currentEvents = (from te in allEvents
-                                                     where te.Day == today && te.Time == meal
-                                                     select te).ToList();
-            return currentEvents;
+            List<Models.TruckEvent> selectedEvents = (from te in allEvents
+                                                      where te.Day == today && te.Time == meal
+                                                      select te).ToList();
+            return selectedEvents;
         }
 
         [HttpPost]
-        public JsonResult FilterNeighborhood(String selection, string setDay = "", string setMeal = "")
+        public JsonResult FilterTrucks(string neighborhood = "", string truckname = "", string day = "", string meal = "")
+        {
+            // Obtain Facebook UserId from Session state uid if logged in
+            string loggedinuser = _currentUser.UserId();
+
+            // Use logged in user if available
+            string userid =
+                loggedinuser != null ? loggedinuser :
+                testuser;
+
+            // Obtain selections from dropdownlist inputs
+            neighborhood = neighborhood.Trim('"');
+            truckname = truckname.Trim('"');
+            day = day.Trim('"');
+            meal = meal.Trim('"');
+
+            // Obtain list of events from specified meal
+            var selectedEvents = getCurrentEvents(day, meal);
+
+            // Filter by neighborhood if required
+            if (! neighborhood.Equals("Show All", StringComparison.Ordinal))
+            {
+                // Obtain list of current Truck events for selected neighborhood
+                selectedEvents = (from truck in selectedEvents
+                                  where String.Compare(truck.Neighborhood, neighborhood, true) == 0
+                                  select truck).ToList();
+            }
+
+            // Filter by TruckName if required
+            if (truckname != "")
+            {
+                // Obtain list of current Truck events for selected truck name
+                selectedEvents = (from truck in selectedEvents
+                                  where String.Compare(truck.Name, truckname, true) == 0
+                                  select truck).ToList();
+            }
+
+            List<Models.TruckPushpinInfo> selectedTruckPins = null;
+            if (userid != null)
+            {
+                // Obtain User Preferences
+                var preferences = _preferenceStore.GetPreferencesForUser(userid);
+
+                // Obtain list of current Truck PushPins for view, left-outer join with user preferences
+                //System.Data.SqlClient.SqlException - To be handled
+                selectedTruckPins = (from te in selectedEvents
+                                     join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
+                                     from profile in tempjoin.DefaultIfEmpty()
+                                     select new Models.TruckPushpinInfo(te, profile == null ? null : profile.preference)).ToList();
+            }
+            else
+            {
+                selectedTruckPins = (from te in selectedEvents
+                                     select new Models.TruckPushpinInfo(te)).ToList();
+            }
+
+            // Declutter pushpins
+            selectedTruckPins = OffsetLatitudeToEachTruckWithSameLoc(selectedTruckPins);
+
+            // Return filtered truck pins
+            return Json(selectedTruckPins, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult FilterNeighborhood(String neighborhoodSelected, string daySelected = "", string mealSelected = "")
         {
             // Obtain neighborhood from dropdownlist input
-            string neighborhood = selection.Trim('"');
+            string neighborhood = neighborhoodSelected.Trim('"');
+            string tempDaySelected = daySelected.Trim('"');
+            string tempMealSelected = mealSelected.Trim('"');
 
             // Obtain Facebook UserId from Session state uid
             string loggedinuser = _currentUser.UserId();
@@ -166,7 +234,7 @@ namespace NextMile02.Controllers
                 testuser;
 
             // Obtain list of current events
-            var currentEvents = getCurrentEvents(setDay, setMeal);
+            var currentEvents = getCurrentEvents(tempDaySelected, tempMealSelected);
 
             List<Models.TruckPushpinInfo> currentTruckPins = null;
             if (userid != null)
