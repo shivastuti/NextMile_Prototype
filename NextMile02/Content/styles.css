@@ -516,7 +516,9 @@ display: none;
     #neighbourhoodList {
         width:100%;
     }
-
+    #myMap{
+        max-width:400px;
+    }
     #indexcontainer{
         margin-top:40px;
     }
@@ -529,6 +531,9 @@ display: none;
      #neighbourhoodList {
         max-width:80%;
     }
+      #myMap{
+        max-width:728px;
+    }
      #indexcontainer{
         margin-top:100px;
     }
@@ -540,12 +545,18 @@ display: none;
      #neighbourhoodList {
         max-width:80%;
     }
+      #myMap{
+        max-width:939px;
+    }
 }
 
 /* small desktop and up*/
-@media (mix-width: 979px) {
+@media (min-width: 979px) {
      #neighbourhoodList {
         max-width:80%;
+    }
+    #myMap{
+        min-width:939px;
     }
 }
 
@@ -555,7 +566,9 @@ display: none;
         max-width:80%;
     }
 
-   
+   #myMap{
+        min-width:1160px;
+    }
 
 	
 }
