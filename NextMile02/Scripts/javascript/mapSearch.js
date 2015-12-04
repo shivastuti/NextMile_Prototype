@@ -68,6 +68,92 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
     map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
     //render the clustered map
     pinClusterer.cluster(AllPushpinInfoData);
+
+    // Utilize the user's location if available
+    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
+    locProvider.getCurrentPosition({ successCallback: ShowUserPosition},{errorCallback:onPositionError});
+}
+
+// Shows the user's location as Pin
+// Zooms the map to current location
+// If we don't know user location, do nothing.
+// If known location but outside Boston, show pin but don't re-center
+// If known location INSIDE Boston, recenter and zoom to user's location
+function ShowUserPosition(user) {
+
+    // Recenter map if user is located in Boston
+    if (map.getBounds().contains(user.position.coords))
+    {
+        alert("You're in Boston!");
+        map.setView({
+            zoom: 15,
+            center: user.center
+        });
+    }
+    else
+    {
+        alert("You're NOT in Boston!");
+        //set to Boston latitude and longitude
+        map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
+    }
+
+    // Create a Pushpin at the user's location
+    var userPushpin = new Microsoft.Maps.Pushpin(user.center);
+    userPushpin.Title = "You are Here";
+
+    // Add Infobox
+    userPinInfobox = new Microsoft.Maps.Infobox(userPushpin.getLocation(),
+        {
+            title: 'You are Here!',
+            width: 100, height: 50,
+            visible: true,
+            offset: new Microsoft.Maps.Point(0, 15)
+        });
+
+    Microsoft.Maps.Events.addHandler(userPushpin, 'mouseover', function (e) {
+        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
+    });
+
+    Microsoft.Maps.Events.addHandler(userPushpin, 'click', function (e) {
+        if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
+    });
+    map.entities.push(userPushpin);
+    map.entities.push(userPinInfobox);
+    
+    //// Marks current location with a circle and sets its border width,
+    //// border color and body color
+    //geoLocationProvider.addAccuracyCircle(position.center, 30, 30, {
+    //    polygonOptions: {
+    //        strokeThickness: 2,
+    //        fillColor: new Microsoft.Maps.Color(200, 255, 128, 0),
+    //        strokeColor: new Microsoft.Maps.Color(255, 0, 128, 0)
+    //    }
+    //});
+}
+
+function displayUserInfobox(e) {
+    userPinInfobox.setOptions({ visible: true });
+}
+
+function hideUserInfobox(e) {
+    userPinInfobox.setOptions({ visible: false });
+}
+
+function onPositionError(err) {
+    switch (err.code) {
+        case 0:
+            alert("Unknown error");
+            break;
+        case 1:
+            alert("Browser Location settings are disabled by User.");
+            break;
+        case 2:
+            alert("Location data unavailable.");
+            break;
+        case 3:
+            alert("Location request timed out.");
+            break;
+    }
 }
 
 //display info box for clustered pushpins
