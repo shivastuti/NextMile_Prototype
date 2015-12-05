@@ -58,7 +58,7 @@ namespace NextMile02.Tests.Controllers
 
             // Assert
             var neighborhoods = result.ViewData["CurrentNeighborhoods"] as List<Models.Neighborhood>;
-            Assert.AreEqual(neighborhoods[0].neighborhood, "Show All");
+            Assert.AreEqual(neighborhoods[0].neighborhood, Constants.AllNeighborhoodsString);
         }
 
         [TestMethod]
@@ -225,7 +225,7 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -313,7 +313,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -364,7 +364,7 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("Show All", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
@@ -568,7 +568,7 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterTrucks("Show All", truckname: "TestTruck2", day: "Friday", meal: "Lunch");
+            JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, truckname: "TestTruck2", day: "Friday", meal: "Lunch");
 
             // Assert
             var pins = result.Data as List<Models.TruckPushpinInfo>;
