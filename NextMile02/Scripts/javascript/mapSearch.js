@@ -468,14 +468,18 @@ function RenderFilteredTrucks() {
         type: "POST",
         dataType: "json",
         data: "neighborhood=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&truckname=" + encodeURIComponent(JSON.stringify(trucknameSelected)) + "&day=" + JSON.stringify(daySelected) + "&meal=" + JSON.stringify(mealSelected),
-        success: function (PushpinFilteredData) {
+        success: function (data) {
             map.entities.clear();
-            if (dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value === allNeighborhoods) {
+            removeOptions(document.getElementById('neighbourhoodList'));
+            removeOptions(document.getElementById('foodTruckName'));
+            populateTruckNameDropDownList(data.FilteredTrucks, trucknameSelected);
+            populateNeighborhoodDropDownList(data.FilteredNeighborhoods,neighborhoodSelected);
+            if (neighborhoodSelected === allNeighborhoods) {
                 //Pin Clustered Map View
                 /*Show Clustered Pushpins Map view - For 'Show All' option*/
                 if (pinClusterer != null) {
                     pinClusterer.reinitialize(map);
-                    renderPushpinClusteredMap(PushpinFilteredData, pinClusterer);
+                    renderPushpinClusteredMap(data.PushpinFilteredData, pinClusterer);
                 }
             } else {
                 //Zoomed in Map View
@@ -485,5 +489,34 @@ function RenderFilteredTrucks() {
     });
 }
 
+//to remove all items in dropdown list -- Temp Until we figure out a way to bind elements to drop down list
+function removeOptions(selectbox) {
+    var i;
+    for (i = selectbox.options.length - 1; i >= 0; i--) {
+        selectbox.remove(i);
+    }
+}
 
+function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
+    var truckNameData = FilteredTrucks ; 
+    console.log(truckNameData);
+    var dropdownListTN= document.getElementById('foodTruckName');
+    for (var i = 0; i < truckNameData.length; i++) {
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = truckNameData[i];
+        dropdownListTN.options.add(optn);
+    }
+    dropdownListTN.value = selectedTruckName;
+}
 
+function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighborhood) {
+    var neighborhoodData = FilteredNeighborhood; 
+    console.log(neighborhoodData + " " + selectedNeighborhood);
+    var dropdownListNeighborhood = document.getElementById('neighbourhoodList');
+    for (var i = 0; i < neighborhoodData.length; i++) {
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = neighborhoodData[i].neighborhood;
+        dropdownListNeighborhood.options.add(optn);
+    }
+    dropdownListNeighborhood.value = selectedNeighborhood;
+}

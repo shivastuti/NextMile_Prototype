@@ -571,7 +571,8 @@ namespace NextMile02.Tests.Controllers
             JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, truckname: "TestTruck2", day: "Friday", meal: "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 1);
             Assert.AreEqual(pins[0].truckName, "TestTruck2");

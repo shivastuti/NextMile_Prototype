@@ -75,22 +75,9 @@ namespace NextMile02.Controllers
                                     select new Models.TruckPushpinInfo(te)).ToList();
             }
 
-            // Obtain list of distinct locations sorted alphabetically
-            List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
-                                                              group te by te.Neighborhood into n
-                                                              select new Models.Neighborhood(n.Key))
-                                                              .Distinct().OrderBy(s=> s.neighborhood).ToList();
+            List<Models.Neighborhood> currentNeighborhoods = getNeighborhoodList(currentEvents);
 
-            //Inserts Show all Locations to dropdown List
-            currentNeighborhoods.Insert(0, new Models.Neighborhood(Constants.AllNeighborhoodsString));
-
-            // Obtain list of distinct truck names sorted alphabetically
-            List<string> currentTrucknames = (from te in currentEvents
-                                              select te.Name)
-                                              .Distinct().OrderBy(n => n).ToList();
-
-            //Inserts Show all Locations to dropdown List
-            currentTrucknames.Insert(0, Constants.AllTrucksString);
+            List<string> currentTrucknames = getTruckNameList(currentEvents);
 
             currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
 
@@ -99,6 +86,31 @@ namespace NextMile02.Controllers
             ViewData["CurrentNeighborhoods"] = currentNeighborhoods;
             ViewData["CurrentTrucks"] = currentTrucknames;
             return View("Index", ViewData);
+        }
+
+        private static List<string> getTruckNameList(List<TruckEvent> currentEvents)
+        {
+            // Obtain list of distinct truck names sorted alphabetically
+            List<string> currentTrucknames = (from te in currentEvents
+                                              select te.Name)
+                                              .Distinct().OrderBy(n => n).ToList();
+
+            //Inserts Show all Locations to dropdown List
+            currentTrucknames.Insert(0, Constants.AllTrucksString);
+            return currentTrucknames;
+        }
+
+        private static List<Neighborhood> getNeighborhoodList(List<TruckEvent> currentEvents)
+        {
+            // Obtain list of distinct locations sorted alphabetically
+            List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
+                                                              group te by te.Neighborhood into n
+                                                              select new Models.Neighborhood(n.Key))
+                                                              .Distinct().OrderBy(s => s.neighborhood).ToList();
+
+            //Inserts Show all Locations to dropdown List
+            currentNeighborhoods.Insert(0, new Models.Neighborhood(Constants.AllNeighborhoodsString));
+            return currentNeighborhoods;
         }
 
         //This method needs refactoring
@@ -221,8 +233,11 @@ namespace NextMile02.Controllers
             // Declutter pushpins
             selectedTruckPins = OffsetLatitudeToEachTruckWithSameLoc(selectedTruckPins);
 
+            List<Models.Neighborhood> currentNeighborhoods = getNeighborhoodList(selectedEvents);
+            List<string> currentTrucknames = getTruckNameList(selectedEvents);
+
             // Return filtered truck pins
-            return Json(selectedTruckPins, JsonRequestBehavior.AllowGet);
+            return Json(new { PushpinFilteredData = selectedTruckPins, FilteredNeighborhoods = currentNeighborhoods, FilteredTrucks = currentTrucknames }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
