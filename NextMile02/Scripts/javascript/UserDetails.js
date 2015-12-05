@@ -1,5 +1,5 @@
-﻿app.controller("ProfileCtrl", function ()
+﻿var app = angular.module("FacebookUserDetailsApp", []);
+app.controller("FacebookUserDetailsCtrl", function ()
 {
-    console.log("%c   [echo] Profile controller has been initialized",
-                "font-family: Courier New;");
+    console.log("userdetailsangular javascript");
 });

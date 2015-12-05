@@ -82,7 +82,7 @@ function InitialiseFacebook(appId)
                                     success: function (res)
                                     {
                                         window.location.reload();
-                                      ('#Profile').load('/Account/UserDetails');
+                                      
                                       
                                     }
                                 });
