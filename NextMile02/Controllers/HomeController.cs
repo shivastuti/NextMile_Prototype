@@ -82,7 +82,7 @@ namespace NextMile02.Controllers
                                                               .Distinct().OrderBy(s=> s.neighborhood).ToList();
 
             //Inserts Show all Locations to dropdown List
-            currentNeighborhoods.Insert(0, new Models.Neighborhood("Show All"));
+            currentNeighborhoods.Insert(0, new Models.Neighborhood(Constants.AllNeighborhoodsString));
 
             // Obtain list of distinct truck names sorted alphabetically
             List<string> currentTrucknames = (from te in currentEvents
@@ -90,7 +90,7 @@ namespace NextMile02.Controllers
                                               .Distinct().OrderBy(n => n).ToList();
 
             //Inserts Show all Locations to dropdown List
-            currentTrucknames.Insert(0, "Show All");
+            currentTrucknames.Insert(0, Constants.AllTrucksString);
 
             currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
 
@@ -182,7 +182,7 @@ namespace NextMile02.Controllers
             var selectedEvents = getCurrentEvents(day, meal);
 
             // Filter by neighborhood if required
-            if (! neighborhood.Equals("Show All", StringComparison.Ordinal))
+            if (! neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
             {
                 // Obtain list of current Truck events for selected neighborhood
                 selectedEvents = (from truck in selectedEvents
@@ -264,7 +264,7 @@ namespace NextMile02.Controllers
             }
             List<Models.TruckPushpinInfo> localTruckPins;
 
-            if (neighborhood.Equals("Show All", StringComparison.Ordinal))
+            if (neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
             {
                 //Display All the trucks
                 localTruckPins = currentTruckPins;

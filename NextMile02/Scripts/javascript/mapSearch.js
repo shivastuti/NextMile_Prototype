@@ -3,7 +3,8 @@ var map = null, infobox = null, datalayer = null;
 var bestview = null;
 var pushPinWidth = 35;
 var pushPinHeight = 35;
-var showAll = 'Show All';
+var allNeighborhoods = 'All Neighborhoods';
+var allTrucknames = 'All Trucks';
 var pinClusterer = null;
 
 $(document).ready(function () {
@@ -26,7 +27,7 @@ $(document).ready(function () {
     map = new Microsoft.Maps.Map(
         document.getElementById("myMap"), mapOptions);
 
-    document.getElementById('neighbourhoodList').value = showAll;
+    document.getElementById('neighbourhoodList').value = allNeighborhoods;
 
     /*Show Clustered Pushpins Map view - For 'Show All' option*/
     pinClusterer = new PinClusterer(map, {
@@ -401,7 +402,7 @@ function changePushPinColor(pushpin, data) {
     /*Instead of Refetching the complete data we just send update for a
     changed truck data to be stored in pin_cluster truckPinData*/
     var dropList = document.getElementById('neighbourhoodList');
-    if (dropList.options[dropList.selectedIndex].value === showAll) {
+    if (dropList.options[dropList.selectedIndex].value === allNeighborhoods) {
         //console.log("show all");
         for (i = 0; i < pinClusterer._truckPinData.length; i++) {
             if (pinClusterer._truckPinData[i].truckName === pushpin.Title) {
@@ -450,7 +451,7 @@ function getTodayDateAndMealTime() {
 
 }
 
-function RenderSpecificTrucksNew() {
+function RenderFilteredTrucks() {
     var dropListNeighborhood = document.getElementById('neighbourhoodList');
     var neighborhoodSelected = dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value;
     var dropListMeal = document.getElementById('mealTime');
@@ -467,7 +468,7 @@ function RenderSpecificTrucksNew() {
         data: "neighborhoodSelected=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&daySelected=" + JSON.stringify(daySelected) + "&mealSelected=" + JSON.stringify(mealSelected),
         success: function (PushpinFilteredData) {
             map.entities.clear();
-            if (dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value === showAll) {
+            if (dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value === allNeighborhoods) {
                 //Pin Clustered Map View
                 /*Show Clustered Pushpins Map view - For 'Show All' option*/
                 if (pinClusterer != null) {
