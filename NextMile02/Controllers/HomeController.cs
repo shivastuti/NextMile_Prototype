@@ -182,7 +182,7 @@ namespace NextMile02.Controllers
             var selectedEvents = getCurrentEvents(day, meal);
 
             // Filter by neighborhood if required
-            if (! neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
+            if (neighborhood != "" && !neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
             {
                 // Obtain list of current Truck events for selected neighborhood
                 selectedEvents = (from truck in selectedEvents
@@ -191,7 +191,7 @@ namespace NextMile02.Controllers
             }
 
             // Filter by TruckName if required
-            if (truckname != "")
+            if (truckname != "" && !truckname.Equals(Constants.AllTrucksString, StringComparison.Ordinal))
             {
                 // Obtain list of current Truck events for selected truck name
                 selectedEvents = (from truck in selectedEvents

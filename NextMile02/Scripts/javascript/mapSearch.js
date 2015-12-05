@@ -458,14 +458,16 @@ function RenderFilteredTrucks() {
     var mealSelected = dropListMeal.options[dropListMeal.selectedIndex].value;
     var dropListDay = document.getElementById('dayOfWeek');
     var daySelected = dropListDay.options[dropListDay.selectedIndex].value;
+    var dropListTruckName = document.getElementById('foodTruckName');
+    var trucknameSelected = dropListTruckName.options[dropListTruckName.selectedIndex].value;
 
-    console.log(neighborhoodSelected + " " + mealSelected + " " + daySelected);
+    console.log(neighborhoodSelected + " " + mealSelected + " " + daySelected + " " + trucknameSelected);
 
     $.ajax({
-        url: "../../Home/FilterNeighborhood",
+        url: "../../Home/FilterTrucks",
         type: "POST",
         dataType: "json",
-        data: "neighborhoodSelected=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&daySelected=" + JSON.stringify(daySelected) + "&mealSelected=" + JSON.stringify(mealSelected),
+        data: "neighborhood=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&truckname=" + encodeURIComponent(JSON.stringify(trucknameSelected)) + "&day=" + JSON.stringify(daySelected) + "&meal=" + JSON.stringify(mealSelected),
         success: function (PushpinFilteredData) {
             map.entities.clear();
             if (dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value === allNeighborhoods) {
