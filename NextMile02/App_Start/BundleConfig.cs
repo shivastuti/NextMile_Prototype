@@ -22,6 +22,7 @@ namespace NextMile02
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/javascript/bootstrap.js",
                       "~/Scripts/javascript/Facebook.js",
+                      "~/Scripts/javascript/UserDetails.js",
                       "~/Scripts/javascript/index.js",
                       "~/Scripts/javascript/respond.js"));
 
