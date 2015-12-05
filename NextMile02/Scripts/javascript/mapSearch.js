@@ -273,6 +273,10 @@ function renderMap(PushpinInfoData) {
             bounds: bestview
         });
     }
+
+    // Utilize the user's location if available
+    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
+    locProvider.getCurrentPosition({ successCallback: ShowUserPosition }, { errorCallback: onPositionError });
 }
 
 function displayInfoboxSettings(pushpin) {

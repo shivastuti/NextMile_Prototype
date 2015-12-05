@@ -75,21 +75,29 @@ namespace NextMile02.Controllers
                                     select new Models.TruckPushpinInfo(te)).ToList();
             }
 
-            // Obtain list of distinct locations
+            // Obtain list of distinct locations sorted alphabetically
             List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
                                                               group te by te.Neighborhood into n
                                                               select new Models.Neighborhood(n.Key))
                                                               .Distinct().OrderBy(s=> s.neighborhood).ToList();
 
-            //sort Neighborhood Names alphabetically
             //Inserts Show all Locations to dropdown List
             currentNeighborhoods.Insert(0, new Models.Neighborhood("Show All"));
+
+            // Obtain list of distinct truck names sorted alphabetically
+            List<string> currentTrucknames = (from te in currentEvents
+                                              select te.Name)
+                                              .Distinct().OrderBy(n => n).ToList();
+
+            //Inserts Show all Locations to dropdown List
+            currentTrucknames.Insert(0, "Show All");
 
             currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewData["CurrentTruckPins"] = serializer.Serialize(currentTruckPins);
             ViewData["CurrentNeighborhoods"] = currentNeighborhoods;
+            ViewData["CurrentTrucks"] = currentTrucknames;
             return View("Index", ViewData);
         }
 
