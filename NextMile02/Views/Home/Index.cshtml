@@ -21,32 +21,20 @@
         <div class="row glibc">
             <div class="col-sm-2 padded-custom">
                 <select class="form-control" id="foodTruckName" onchange="RenderFilteredTrucks()">
-                    @foreach (var name in ((List<string>)ViewData["CurrentTrucks"]))
+                    @foreach (var name in ((List<String>)ViewData["CurrentTrucks"]))
                     {
                         <option value="@name">@name</option>
                     }
                 </select>
             </div>
             <div class="col-sm-2 padded-custom">
-<<<<<<< HEAD
-                <select class="form-control" id="mealTime" onchange="RenderFilteredTrucks()">
-                </select>
+                <select class="form-control" id="mealTime" onchange="RenderFilteredTrucks()"></select>
             </div>
             <div class="col-sm-2 padded-custom">
-                <select name="By Day" class="form-control" id="dayOfWeek" onchange="RenderFilteredTrucks()">
-                </select>
-            </div>
-            <div class="col-sm-5 padded-custom">                
-                <select class="form-control" id="neighbourhoodList" onchange="RenderFilteredTrucks()">
-=======
-                <select class="form-control" id="mealTime" onchange="RenderSpecificTrucksNew()"></select>
-            </div>
-            <div class="col-sm-2 padded-custom">
-                <select name="By Day" class="form-control" id="dayOfWeek" onchange="RenderSpecificTrucksNew()"></select>
+                <select name="By Day" class="form-control" id="dayOfWeek" onchange="RenderFilteredTrucks()"></select>
             </div>
             <div class="col-sm-5 padded-custom">
-                <select class="form-control" id="neighbourhoodList" onchange="RenderSpecificTrucksNew()">
->>>>>>> origin/master
+                <select class="form-control" id="neighbourhoodList" onchange="RenderFilteredTrucks()">
                     @foreach (var std in ((List<NextMile02.Models.Neighborhood>)ViewData["CurrentNeighborhoods"]))
                     {
                         <option value="@std.neighborhood">@std.neighborhood</option>
