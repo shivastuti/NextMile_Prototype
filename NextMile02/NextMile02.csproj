@@ -220,10 +220,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\javascript\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\MapSearch_PartialPage1.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\Account\UserDetails.cshtml" />
     <Content Include="Scripts\version.json" />
