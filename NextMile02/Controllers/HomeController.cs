@@ -51,8 +51,11 @@ namespace NextMile02.Controllers
                 loggedinuser != null ? loggedinuser :
                 testuser;
 
+            String day = setDay;
+            String meal = setMeal;
+
             // Obtain list of current events
-            var currentEvents = getCurrentEvents(setDay, setMeal);
+            var currentEvents = getCurrentEvents(ref day, ref meal);
 
             List<Models.TruckPushpinInfo> currentTruckPins = null;
 
@@ -75,23 +78,25 @@ namespace NextMile02.Controllers
                                     select new Models.TruckPushpinInfo(te)).ToList();
             }
 
-            List<Models.Neighborhood> currentNeighborhoods = getNeighborhoodList(currentEvents);
+            List<String> currentNeighborhoods = getNeighborhoodList(currentEvents);
 
-            List<string> currentTrucknames = getTruckNameList(currentEvents);
+            List<String> currentTrucknames = getTruckNameList(currentEvents);
 
             currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewData["CurrentTruckPins"] = serializer.Serialize(currentTruckPins);
-            ViewData["CurrentNeighborhoods"] = currentNeighborhoods;
-            ViewData["CurrentTrucks"] = currentTrucknames;
+            ViewData["CurrentNeighborhoods"] = new SelectList(currentNeighborhoods, Constants.AllNeighborhoodsString);
+            ViewData["CurrentTrucks"] = new SelectList(currentTrucknames, Constants.AllTrucksString);
+            ViewData["MealTimes"] = new SelectList(new[] { "Breakfast", "Lunch", "Dinner", "Late Night" }, meal);
+            ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday", "Sunday" }, day);
             return View("Index", ViewData);
         }
 
-        private static List<string> getTruckNameList(List<TruckEvent> currentEvents)
+        private static List<String> getTruckNameList(List<TruckEvent> currentEvents)
         {
             // Obtain list of distinct truck names sorted alphabetically
-            List<string> currentTrucknames = (from te in currentEvents
+            List<String> currentTrucknames = (from te in currentEvents
                                               select te.Name)
                                               .Distinct().OrderBy(n => n).ToList();
 
@@ -100,16 +105,15 @@ namespace NextMile02.Controllers
             return currentTrucknames;
         }
 
-        private static List<Neighborhood> getNeighborhoodList(List<TruckEvent> currentEvents)
+        private static List<String> getNeighborhoodList(List<TruckEvent> currentEvents)
         {
             // Obtain list of distinct locations sorted alphabetically
-            List<Models.Neighborhood> currentNeighborhoods = (from te in currentEvents
-                                                              group te by te.Neighborhood into n
-                                                              select new Models.Neighborhood(n.Key))
-                                                              .Distinct().OrderBy(s => s.neighborhood).ToList();
+            List<String> currentNeighborhoods = (from te in currentEvents
+                                                 select te.Neighborhood)
+                                                 .Distinct().OrderBy(n => n).ToList();
 
             //Inserts Show all Locations to dropdown List
-            currentNeighborhoods.Insert(0, new Models.Neighborhood(Constants.AllNeighborhoodsString));
+            currentNeighborhoods.Insert(0, Constants.AllNeighborhoodsString);
             return currentNeighborhoods;
         }
 
@@ -142,7 +146,7 @@ namespace NextMile02.Controllers
             return currentTruckPins;
         }
 
-        private List<Models.TruckEvent> getCurrentEvents(string setDay, string setMeal)
+        private List<Models.TruckEvent> getCurrentEvents(ref string setDay, ref string setMeal)
         {
             // Obtain datetime per Boston timezone
             TimeZoneInfo BostonTime = System.TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
@@ -174,6 +178,8 @@ namespace NextMile02.Controllers
             List<Models.TruckEvent> selectedEvents = (from te in allEvents
                                                       where te.Day == today && te.Time == meal
                                                       select te).ToList();
+            setDay = today;
+            setMeal = meal;
             return selectedEvents;
         }
 
@@ -194,8 +200,10 @@ namespace NextMile02.Controllers
             day = day.Trim('"');
             meal = meal.Trim('"');
 
+            String tempDay = day;
+            String tempMeal = meal;
             // Obtain list of events from specified meal
-            var selectedEvents = getCurrentEvents(day, meal);
+            var selectedEvents = getCurrentEvents(ref tempDay, ref tempMeal);
 
             // Filter by neighborhood if required
             if (neighborhood != "" && !neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
@@ -236,70 +244,11 @@ namespace NextMile02.Controllers
             // Declutter pushpins
             selectedTruckPins = OffsetLatitudeToEachTruckWithSameLoc(selectedTruckPins);
 
-            List<Models.Neighborhood> currentNeighborhoods = getNeighborhoodList(selectedEvents);
-            List<string> currentTrucknames = getTruckNameList(selectedEvents);
+            List<String> currentNeighborhoods = getNeighborhoodList(selectedEvents);
+            List<String> currentTrucknames = getTruckNameList(selectedEvents);
 
             // Return filtered truck pins
             return Json(new { PushpinFilteredData = selectedTruckPins, FilteredNeighborhoods = currentNeighborhoods, FilteredTrucks = currentTrucknames }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult FilterNeighborhood(String neighborhoodSelected, string daySelected = "", string mealSelected = "")
-        {
-            // Obtain neighborhood from dropdownlist input
-            string neighborhood = neighborhoodSelected.Trim('"');
-            string tempDaySelected = daySelected.Trim('"');
-            string tempMealSelected = mealSelected.Trim('"');
-
-            // Obtain Facebook UserId from Session state uid
-            string loggedinuser = _currentUser.UserId();
-
-            // Use logged in user if available
-            string userid =
-                loggedinuser != null ? loggedinuser :
-                testuser;
-
-            // Obtain list of current events
-            var currentEvents = getCurrentEvents(tempDaySelected, tempMealSelected);
-
-            List<Models.TruckPushpinInfo> currentTruckPins = null;
-            if (userid != null)
-            {
-                // Obtain User Preferences
-                var preferences = _preferenceStore.GetPreferencesForUser(userid);
-
-                // Obtain list of current Truck PushPins for view, left-outer join with user preferences
-                //System.Data.SqlClient.SqlException - To be handled
-                currentTruckPins = (from te in currentEvents
-                                    join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
-                                    from profile in tempjoin.DefaultIfEmpty()
-                                    select new Models.TruckPushpinInfo(te, profile == null ? null : profile.preference)).ToList();
-            }
-            else
-            {
-                currentTruckPins = (from te in currentEvents
-                                    select new Models.TruckPushpinInfo(te)).ToList();
-            }
-            List<Models.TruckPushpinInfo> localTruckPins;
-
-            if (neighborhood.Equals(Constants.AllNeighborhoodsString, StringComparison.Ordinal))
-            {
-                //Display All the trucks
-                localTruckPins = currentTruckPins;
-            }
-            else
-            {
-                // Obtain list of current Truck PushPins for selected neighborhood
-                localTruckPins = (from truckPin in currentTruckPins
-                                  where String.Compare(truckPin.location, neighborhood, true) == 0
-                                  select truckPin).ToList();
-            }
-
-            // Declutter pushpins
-            localTruckPins = OffsetLatitudeToEachTruckWithSameLoc(localTruckPins);
-
-            // Return filtered truck pins
-            return Json(localTruckPins, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

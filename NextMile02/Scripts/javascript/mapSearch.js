@@ -8,7 +8,6 @@ var allTrucknames = 'All Trucks';
 var pinClusterer = null;
 
 $(document).ready(function () {
-    getTodayDateAndMealTime();
 
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
@@ -413,44 +412,6 @@ function changePushPinColor(pushpin, data) {
     }
 }
 
-//initialse today date and time
-function getTodayDateAndMealTime() {
-    var todayDate = new Date();
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var mealTimes = ['Breakfast', 'Lunch', 'Dinner', 'Late Night'];
-    var today = days[todayDate.getDay()];
-
-    var mealTime = "";
-    if (todayDate.getHours() >= 0 && todayDate.getHours() < 10)
-    { mealTime = "Breakfast"; }
-    else if (todayDate.getHours() >= 10 && todayDate.getHours() < 15)
-    { mealTime = "Lunch"; }
-    else if (todayDate.getHours() >= 15 && todayDate.getHours() < 22)
-    { mealTime = "Dinner"; }
-    else
-    { mealTime = "Late Night"; }
-
-    var dropdownListMealTime = document.getElementById('mealTime');
-    for (var i = 0; i < mealTimes.length; i++)
-    {
-        var optn = document.createElement("OPTION");
-        optn.text = optn.value = mealTimes[i];
-        dropdownListMealTime.options.add(optn);
-    }
-
-    var dropdownListDays = document.getElementById('dayOfWeek');
-    for (var i = 0; i < days.length; i++) {
-        var optn = document.createElement("OPTION");
-        optn.text = optn.value = days[i];
-        dropdownListDays.options.add(optn);
-    }
-
-    //set current values
-    dropdownListMealTime.value = mealTime;
-    dropdownListDays.value = today;
-
-}
-
 function RenderFilteredTrucks() {
     var dropListNeighborhood = document.getElementById('neighbourhoodList');
     var neighborhoodSelected = dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value;
@@ -515,7 +476,7 @@ function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighbor
     var dropdownListNeighborhood = document.getElementById('neighbourhoodList');
     for (var i = 0; i < neighborhoodData.length; i++) {
         var optn = document.createElement("OPTION");
-        optn.text = optn.value = neighborhoodData[i].neighborhood;
+        optn.text = optn.value = neighborhoodData[i];
         dropdownListNeighborhood.options.add(optn);
     }
     dropdownListNeighborhood.value = selectedNeighborhood;

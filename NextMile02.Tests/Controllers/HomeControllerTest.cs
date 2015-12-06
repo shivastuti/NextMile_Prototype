@@ -57,8 +57,10 @@ namespace NextMile02.Tests.Controllers
             ViewResult result = controller.Index();
 
             // Assert
-            var neighborhoods = result.ViewData["CurrentNeighborhoods"] as List<Models.Neighborhood>;
-            Assert.AreEqual(neighborhoods[0].neighborhood, Constants.AllNeighborhoodsString);
+            var neighborhoods = result.ViewData["CurrentNeighborhoods"] as SelectList;
+            Assert.AreEqual(neighborhoods.SelectedValue, Constants.AllNeighborhoodsString);
+            var trucknames = result.ViewData["CurrentTrucks"] as SelectList;
+            Assert.AreEqual(trucknames.SelectedValue, Constants.AllTrucksString);
         }
 
         [TestMethod]
@@ -225,14 +227,11 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, "", "Friday", "Lunch");
 
             // Assert
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            // Deserialize
-            //MapView view = serializer.Deserialize<MapView>(example);
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
-            //List<Models.TruckPushpinInfo> pins = serializer.Deserialize<List<Models.TruckPushpinInfo>>(pinsString);
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 2);
             Assert.AreEqual(pins[1].truckName, "TestTruck2");
@@ -270,10 +269,11 @@ namespace NextMile02.Tests.Controllers
                 new MockCurrentUser());
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks("SoWa Open Market, 500 Harrison Avenue", "", "Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 1);
             Assert.AreEqual(pins[0].truckName, "TestTruck2");
@@ -313,10 +313,11 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, "", "Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 2);
             Assert.AreEqual(pins[1].truckName, "TestTruck2");
@@ -364,10 +365,11 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood(Constants.AllNeighborhoodsString, daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, "", "Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 2);
             Assert.AreEqual(pins[1].truckName, "TestTruck2");
@@ -407,10 +409,11 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks("SoWa Open Market, 500 Harrison Avenue", "","Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(1, pins.Count);
             Assert.AreEqual(pins[0].truckName, "TestTruck2");
@@ -458,10 +461,11 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks("SoWa Open Market, 500 Harrison Avenue", "", "Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(
                 1, 
@@ -527,10 +531,11 @@ namespace NextMile02.Tests.Controllers
                 user);
 
             // Act
-            JsonResult result = controller.FilterNeighborhood("SoWa Open Market, 500 Harrison Avenue", daySelected: "Friday", mealSelected: "Lunch");
+            JsonResult result = controller.FilterTrucks("SoWa Open Market, 500 Harrison Avenue", "", "Friday", "Lunch");
 
             // Assert
-            var pins = result.Data as List<Models.TruckPushpinInfo>;
+            dynamic jsonResult = result.Data;
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(2,                                          pins.Count);
             Assert.AreEqual("TestTruck3",                               pins[1].truckName);

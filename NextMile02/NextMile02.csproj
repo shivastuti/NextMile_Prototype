@@ -143,7 +143,6 @@
     <Compile Include="Models\TruckDataRepository.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\Neighborhood.cs" />
     <Compile Include="Models\TruckEvent.cs" />
     <Compile Include="Models\TruckPushpinInfo.cs" />
     <Compile Include="NextMileDB1.designer.cs">

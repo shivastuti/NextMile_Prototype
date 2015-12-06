@@ -16,30 +16,19 @@
         <p class="hidden">Facebook User Id: @Session["uid"]</p>
         <p class="hidden">Flag : @Session["flag"] </p>
 
-
         <div ng-include="'/Account/UserDetails'" ng-show='\@Session["flag"] == 0'></div>
         <div class="row glibc">
             <div class="col-sm-2 padded-custom">
-                <select class="form-control" id="foodTruckName" onchange="RenderFilteredTrucks()">
-                    @foreach (var name in ((List<String>)ViewData["CurrentTrucks"]))
-                    {
-                        <option value="@name">@name</option>
-                    }
-                </select>
+                @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
             </div>
             <div class="col-sm-2 padded-custom">
-                <select class="form-control" id="mealTime" onchange="RenderFilteredTrucks()"></select>
+                @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
             </div>
             <div class="col-sm-2 padded-custom">
-                <select name="By Day" class="form-control" id="dayOfWeek" onchange="RenderFilteredTrucks()"></select>
+                @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
             </div>
             <div class="col-sm-5 padded-custom">
-                <select class="form-control" id="neighbourhoodList" onchange="RenderFilteredTrucks()">
-                    @foreach (var std in ((List<NextMile02.Models.Neighborhood>)ViewData["CurrentNeighborhoods"]))
-                    {
-                        <option value="@std.neighborhood">@std.neighborhood</option>
-                    }
-                </select>
+                @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
             </div>
         </div>
         <div id="myMap" class="col-sm-12 glibc"></div>
@@ -57,8 +46,6 @@
 <script src="~/Scripts/javascript/mapSearch.js"></script>
 <script src="~/Scripts/javascript/UserDetails.js"></script>
 <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
-
-
 
 
 
