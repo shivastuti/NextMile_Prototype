@@ -17,7 +17,7 @@
         <p class="hidden">Facebook User Id: @Session["uid"]</p>
         <p class="hidden">Flag : @Session["flag"] </p>
 
-        <div ng-include="'/Account/UserDetails'" ng-show='\@Session["flag"] == 0'></div>
+        <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
         <div class="row glib">
             <div class="col-sm-12">
                 <span class="h4">Please select one of the following</span>
