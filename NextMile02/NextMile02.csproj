@@ -187,7 +187,6 @@
       <LastGenOutput>NextMileDB1.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\errors.json" />
     <None Include="Properties\PublishProfiles\NextMile.pubxml" />
     <None Include="Properties\PublishProfiles\NextMileAWS.pubxml" />
     <None Include="Scripts\javascript\jquery-1.10.2.intellisense.js" />
@@ -222,9 +221,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\javascript\jquery-1.10.2.min.map" />
-    <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\Account\UserDetails.cshtml" />
-    <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -19,16 +19,16 @@
         <div ng-include="'/Account/UserDetails'" ng-show='\@Session["flag"] == 0'></div>
         <div class="row glibc">
             <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
+                @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
             </div>
             <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
+                @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
             </div>
             <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
+                @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
             </div>
             <div class="col-sm-5 padded-custom">
-                @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" });
+                @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
             </div>
         </div>
         <div id="myMap" class="col-sm-12 glibc"></div>
