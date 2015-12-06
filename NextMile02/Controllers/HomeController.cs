@@ -144,14 +144,18 @@ namespace NextMile02.Controllers
 
         private List<Models.TruckEvent> getCurrentEvents(string setDay, string setMeal)
         {
+            // Obtain datetime per Boston timezone
+            TimeZoneInfo BostonTime = System.TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime now = System.TimeZoneInfo.ConvertTime(DateTime.Now, System.TimeZoneInfo.Local, BostonTime);
+
             // Determine today's day of week
-            string today = DateTime.Now.DayOfWeek.ToString();
+            string today = now.DayOfWeek.ToString();
 
             // Determine current upcoming meal
             string meal =
-                DateTime.Now.Hour < 10 ? "Breakfast" :
-                DateTime.Now.Hour < 15 ? "Lunch" :
-                DateTime.Now.Hour < 22 ? "Dinner" : "Late Night"; //Aligned according to city of boston
+                now.Hour < 10 ? "Breakfast" :
+                now.Hour < 15 ? "Lunch" :
+                now.Hour < 22 ? "Dinner" : "Late Night"; //Aligned according to city of boston site
 
             // Hardcode any date/meal values here for testing/debugging
             //today = "Wednesday";
@@ -218,7 +222,6 @@ namespace NextMile02.Controllers
                 var preferences = _preferenceStore.GetPreferencesForUser(userid);
 
                 // Obtain list of current Truck PushPins for view, left-outer join with user preferences
-                //System.Data.SqlClient.SqlException - To be handled
                 selectedTruckPins = (from te in selectedEvents
                                      join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
                                      from profile in tempjoin.DefaultIfEmpty()
