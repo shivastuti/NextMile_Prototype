@@ -44,6 +44,11 @@ $(document).ready(function () {
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
                     hideClusteredInfoBox(pushpin, cluster);
             });
+            Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
+                if (e.targetType == 'pushpin') {
+                    displayClusteredInfoBox(pushpin, cluster);
+                }
+            });
         },
         onPinToMap: function (pushpin) {
             Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
@@ -58,6 +63,11 @@ $(document).ready(function () {
             });
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
                     hideInfobox();                
+            });
+            Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
+                if (e.targetType == 'pushpin') {
+                    displayInfobox(pushpin, cluster);
+                }
             });
         }
     });
@@ -138,6 +148,10 @@ function ShowUserPosition(user) {
     Microsoft.Maps.Events.addHandler(userPushpin, 'viewchange', function (e) {
         if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
     });
+    Microsoft.Maps.Events.addHandler(userPushpin, 'touchstart', function (e) {
+        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
+    });
+
     map.entities.push(userPushpin);
     map.entities.push(userPinInfobox);
 
@@ -257,6 +271,9 @@ function renderMap(PushpinInfoData) {
             if (e.targetType == "pushpin") { hideInfobox(e.target) }
         });
         Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
+            if (e.targetType == "pushpin") { displayInfobox(e.target) }
+        });
+        Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
             if (e.targetType == "pushpin") { displayInfobox(e.target) }
         });
         //Microsoft.Maps.Events.addHandler(pushpin, 'mouseout', hideInfobox); -- To do giving timer
