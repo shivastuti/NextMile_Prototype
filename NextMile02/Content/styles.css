@@ -510,6 +510,9 @@ display: none;
    Media Queries
    -------------------------------------- */
 
+#myMap > div{
+    max-width:100%;
+}
 /* Portrait & landscape phone */
 @media (max-width: 480px) {
 
