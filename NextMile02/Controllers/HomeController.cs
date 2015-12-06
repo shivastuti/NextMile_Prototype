@@ -303,5 +303,11 @@ namespace NextMile02.Controllers
 
             return View("About", ViewBag);
         }
+        public ViewResult Welcome()
+        {
+            
+
+            return View("Welcome", ViewBag);
+        }
     }
 }

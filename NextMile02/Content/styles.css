@@ -28,7 +28,7 @@ position : relative !important;
     width: 40%;
 }
 .left {
-    margin-left:5%;
+    margin-left:5% !important;
 }
 .moreleft {
     margin-left: 15%;
@@ -385,6 +385,12 @@ margin-top: 0;
 .glibc {
     margin-top: 80px;
 }
+.topgap {
+    margin-top: 20px;
+}
+paddingcs{
+    padding:20px;
+}
 #fblogin > div
 {
 
@@ -522,9 +528,7 @@ display: none;
 @media (max-width: 480px) {
 
    
-    #myMap{
-        max-width:400px;
-    }
+   
     #indexcontainer{
         margin-top:40px;
     }
@@ -535,9 +539,7 @@ display: none;
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
     
-      #myMap{
-        max-width:728px;
-    }
+    
      #indexcontainer{
         margin-top:100px;
     }
@@ -547,26 +549,20 @@ display: none;
 /* up to small desktop */
 @media (max-width: 979px) {
     
-      #myMap{
-        max-width:939px;
-    }
+     
 }
 
 /* small desktop and up*/
 @media (min-width: 979px) {
    
-    #myMap{
-        min-width:939px;
-    }
+  
 }
 
 /* Large desktop */
 @media (min-width: 1200px) {
     
 
-   #myMap{
-        min-width:1160px;
-    }
+ 
 
 	
 }

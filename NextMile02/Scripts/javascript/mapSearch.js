@@ -8,7 +8,8 @@ var allTrucknames = 'All Trucks';
 var pinClusterer = null;
 
 $(document).ready(function () {
-
+    
+    
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -398,7 +399,10 @@ function btnVoteHandler(pushpin, vote) {
             if (data.success) {
                 changePushPinColor(pushpin, data);
             } else {
-                alert(data.message);
+                $("#loginPrompt").show();
+                var loginmessage = data.message;
+                $("#loginPrompt").html(loginmessage);
+               
             }
         },
         error: function () {

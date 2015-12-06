@@ -28,7 +28,7 @@ namespace NextMile02.Controllers
         {
             Session["uid"]          = model.uid;
             Session["accessToken"]  = model.accessToken;
-            if (Session["flag"]    != "0")
+            if (Session["flag"] != "0")
             {
                 Session["flag"] = model.flag;
             }
@@ -49,7 +49,7 @@ namespace NextMile02.Controllers
         {
             if (Session["accessToken"] == null)
             {
-                return View("Welcome");
+                return View("Welcome",ViewBag);
             }
             var client = new FacebookClient(Session["accessToken"].ToString());
             dynamic fbresult = client.Get("me?fields=id,name,picture.type(large)");

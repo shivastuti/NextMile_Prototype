@@ -1,10 +1,11 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
 }
 
 <body ng-app="FacebookUserDetailsApp">
     @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
-    <div ng-controller="FacebookUserDetailsCtrl" class="container glib" id="indexcontainer">
+    <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid glib" id="indexcontainer">
         @{
             ViewBag.Title = "NextMile - The FoodTruck Search Engine";
             Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,11 +20,11 @@
 
         <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
         <div class="row glib">
-            <div class="col-sm-12">
-                <span class="h4">Please select one of the following</span>
-            </div>
-        </div>
-            <div class="row ">
+            
+            
+                   <h2 style="padding: .2%; margin: 15px 0; color: white; font-size: 36px; text-align: center; text-shadow: 0 0 15px black, 0 0 25px black, 0 0 35px black;"> Search for the nearest Food Truck </h2>
+                
+            <div class="row topgap paddingcs">
                 <div class="col-sm-2 ">
                     @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
                 </div>
@@ -43,6 +44,13 @@
                 </div>
             </div>
         </div>
+           
+        </div>
+    <div  class="alert alert-danger fade in" style="display:inherit;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span id="loginPrompt"></span></div>
+ 
+    </div>
         <div id="myMap" class="col-sm-12 glibc"></div>
         <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
         <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
@@ -57,6 +65,7 @@
 <script src="~/Scripts/javascript/mapSearch.js"></script>
 <script src="~/Scripts/javascript/UserDetails.js"></script>
 <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
 
