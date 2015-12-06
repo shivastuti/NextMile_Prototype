@@ -73,6 +73,10 @@ $(document).ready(function () {
         }
     });
     renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer);
+
+    // Utilize the user's location if available
+    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
+    locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
 });
 
 //pushpin clustered map view
@@ -106,16 +110,16 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
 // If we don't know user location, do nothing.
 // If known location but outside Boston, show pin but don't re-center
 // If known location INSIDE Boston, recenter and zoom to user's location
-function ShowUserPosition(user) {
+function ShowUserPosition(user, option) {
 
     //Initially set to Boston latitude and longitude
     map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
 
-    // Recenter map if user is located in Boston
-    if (map.getBounds().contains(user.position.coords)) {
+    // Recenter map if user is located in Boston, for initial view only
+    if (option == "recenter" && map.getBounds().contains(user.position.coords)) {
         //alert("You're in Boston!");
         map.setView({
-            zoom: 15,
+            zoom: 14,
             center: user.center
         });
     }
@@ -155,16 +159,6 @@ function ShowUserPosition(user) {
 
     map.entities.push(userPushpin);
     map.entities.push(userPinInfobox);
-
-    //// Marks current location with a circle and sets its border width,
-    //// border color and body color
-    //geoLocationProvider.addAccuracyCircle(position.center, 30, 30, {
-    //    polygonOptions: {
-    //        strokeThickness: 2,
-    //        fillColor: new Microsoft.Maps.Color(200, 255, 128, 0),
-    //        strokeColor: new Microsoft.Maps.Color(255, 0, 128, 0)
-    //    }
-    //});
 }
 
 function displayUserInfobox(e) {
@@ -297,7 +291,7 @@ function renderMap(PushpinInfoData) {
 
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
-    locProvider.getCurrentPosition({ successCallback: ShowUserPosition }, { errorCallback: onPositionError });
+    locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "norecenter"); } }, { errorCallback: onPositionError });
 }
 
 function displayInfoboxSettings(pushpin) {
@@ -468,7 +462,7 @@ function RenderFilteredTrucks() {
                 }
             } else {
                 //Zoomed in Map View
-                renderMap(PushpinFilteredData);
+                renderMap(data.PushpinFilteredData);
             }
         }
     });
