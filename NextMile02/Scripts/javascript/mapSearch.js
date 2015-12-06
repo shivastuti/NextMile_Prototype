@@ -8,8 +8,7 @@ var allTrucknames = 'All Trucks';
 var pinClusterer = null;
 
 $(document).ready(function () {
-    
-    
+
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -45,11 +44,6 @@ $(document).ready(function () {
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
                     hideClusteredInfoBox(pushpin, cluster);
             });
-            Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
-                if (e.targetType == 'pushpin') {
-                    displayClusteredInfoBox(pushpin, cluster);
-                }
-            });
         },
         onPinToMap: function (pushpin) {
             Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
@@ -65,18 +59,9 @@ $(document).ready(function () {
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
                     hideInfobox();                
             });
-            Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
-                if (e.targetType == 'pushpin') {
-                    displayInfobox(pushpin, cluster);
-                }
-            });
         }
     });
     renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer);
-
-    // Utilize the user's location if available
-    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
-    locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
 });
 
 //pushpin clustered map view
@@ -110,24 +95,21 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
 // If we don't know user location, do nothing.
 // If known location but outside Boston, show pin but don't re-center
 // If known location INSIDE Boston, recenter and zoom to user's location
-function ShowUserPosition(user, option) {
+function ShowUserPosition(user) {
 
-    //Initially set to Boston latitude and longitude
-    map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
-
-    // Recenter map if user is located in Boston, for initial view only
-    if (option == "recenter" && map.getBounds().contains(user.position.coords)) {
-        //alert("You're in Boston!");
-        map.setView({
-            zoom: 14,
-            center: user.center
-        });
-    }
-    else {
-        //alert("You're NOT in Boston!");
+    //// Recenter map if user is located in Boston
+    //if (map.getBounds().contains(user.position.coords)) {
+    //    alert("You're in Boston!");
+    //    map.setView({
+    //        zoom: 15,
+    //        center: user.center
+    //    });
+    //}
+    //else {
+    //    alert("You're NOT in Boston!");
         //set to Boston latitude and longitude
         map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
-    }
+    //}
 
     // Create a Pushpin at the user's location
     var userPushpin = new Microsoft.Maps.Pushpin(user.center);
@@ -153,12 +135,18 @@ function ShowUserPosition(user, option) {
     Microsoft.Maps.Events.addHandler(userPushpin, 'viewchange', function (e) {
         if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
     });
-    Microsoft.Maps.Events.addHandler(userPushpin, 'touchstart', function (e) {
-        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
-    });
-
     map.entities.push(userPushpin);
     map.entities.push(userPinInfobox);
+
+    //// Marks current location with a circle and sets its border width,
+    //// border color and body color
+    //geoLocationProvider.addAccuracyCircle(position.center, 30, 30, {
+    //    polygonOptions: {
+    //        strokeThickness: 2,
+    //        fillColor: new Microsoft.Maps.Color(200, 255, 128, 0),
+    //        strokeColor: new Microsoft.Maps.Color(255, 0, 128, 0)
+    //    }
+    //});
 }
 
 function displayUserInfobox(e) {
@@ -268,9 +256,6 @@ function renderMap(PushpinInfoData) {
         Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
             if (e.targetType == "pushpin") { displayInfobox(e.target) }
         });
-        Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
-            if (e.targetType == "pushpin") { displayInfobox(e.target) }
-        });
         //Microsoft.Maps.Events.addHandler(pushpin, 'mouseout', hideInfobox); -- To do giving timer
 
         dataLayer.push(pushpin);
@@ -291,7 +276,7 @@ function renderMap(PushpinInfoData) {
 
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
-    locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "norecenter"); } }, { errorCallback: onPositionError });
+    locProvider.getCurrentPosition({ successCallback: ShowUserPosition }, { errorCallback: onPositionError });
 }
 
 function displayInfoboxSettings(pushpin) {
@@ -396,7 +381,7 @@ function btnVoteHandler(pushpin, vote) {
                 $("#loginPrompt").show();
                 var loginmessage = data.message;
                 $("#loginPrompt").html(loginmessage);
-               
+
             }
         },
         error: function () {
@@ -462,7 +447,7 @@ function RenderFilteredTrucks() {
                 }
             } else {
                 //Zoomed in Map View
-                renderMap(data.PushpinFilteredData);
+                renderMap(PushpinFilteredData);
             }
         }
     });
