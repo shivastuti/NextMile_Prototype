@@ -530,11 +530,23 @@ namespace NextMile02.Tests.Controllers
                 new MockTruckDataRepository(testEvents),
                 user);
 
+            //Expected Dropdown lists
+            var expectedNeighborhoodList = new List<String>();
+            expectedNeighborhoodList.Add(Constants.AllNeighborhoodsString);
+            expectedNeighborhoodList.Add("SoWa Open Market, 500 Harrison Avenue");
+
+            var expectedTruckNameList = new List<String>();
+            expectedTruckNameList.Add(Constants.AllTrucksString);
+            expectedTruckNameList.Add("TestTruck2");
+            expectedTruckNameList.Add("TestTruck3");
+
             // Act
             JsonResult result = controller.FilterTrucks("SoWa Open Market, 500 Harrison Avenue", "", "Friday", "Lunch");
 
             // Assert
             dynamic jsonResult = result.Data;
+            CollectionAssert.AreEqual(expectedNeighborhoodList, jsonResult.FilteredNeighborhoods);
+            CollectionAssert.AreEqual(expectedTruckNameList, jsonResult.FilteredTrucks);
             var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(2,                                          pins.Count);
@@ -542,6 +554,98 @@ namespace NextMile02.Tests.Controllers
             Assert.AreEqual("SoWa Open Market, 500 Harrison Avenue",    pins[1].location);
             Assert.AreEqual((Double)(-71.0674873),                      pins[1].longitude);
             Assert.AreEqual(2,                                          pins[1].preference);
+        }
+
+        [TestMethod]
+        public void FilterNeighborhood_Get_SameTruckIn2LocationsOnSameDay_UserWithPreference_5Event2Neighborhood_Validate_2Pins()
+        {
+            // Arrange
+            List<Models.TruckEvent> testEvents = new List<TruckEvent>()
+            {
+                new TruckEvent() { 
+                    Name = "TestTruck1",
+                    Url = "www.testtruck1.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "NEU, on Opera Place at Huntington Ave",
+                    Coordinates = new Location("42.3398106,-71.0913604")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck2",
+                    Url = "www.testtruck2.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "SoWa Open Market, 500 Harrison Avenue",
+                    Coordinates = new Location("42.3425311,-71.0674873")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck3",
+                    Url = "www.testtruck3.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "SoWa Open Market, 500 Harrison Avenue",
+                    Coordinates = new Location("42.3425311,-71.0674873")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck4",
+                    Url = "www.testtruck4.com",
+                    Day = "Friday",
+                    Time = "Dinner",
+                    Neighborhood = "SoWa Open Market, 500 Harrison Avenue",
+                    Coordinates = new Location("42.3425311,-71.0674873")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck3",
+                    Url = "www.testtruck3.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "NEU, on Opera Place at Huntington Ave",
+                    Coordinates = new Location("42.3398106,-71.0913604")
+                }
+            };
+            List<Models.Preference.PreferenceData> testPreferences = new List<Preference.PreferenceData>()
+            {
+                new Preference.PreferenceData() { 
+                    userid = "TestUser1",
+                    truckname = "TestTruck3",
+                    preference = 2  // Downvote
+                },
+            };
+            var user = new MockCurrentUser();
+            user.setUserId("TestUser1");
+            var controller = new HomeController(
+                new MockPreferenceRepository(testPreferences),
+                new MockTruckDataRepository(testEvents),
+                user);
+
+            //Expected Dropdown lists
+            var expectedNeighborhoodList = new List<String>();
+            expectedNeighborhoodList.Add(Constants.AllNeighborhoodsString);
+            expectedNeighborhoodList.Add("NEU, on Opera Place at Huntington Ave");
+            expectedNeighborhoodList.Add("SoWa Open Market, 500 Harrison Avenue");
+
+            var expectedTruckNameList = new List<String>();
+            expectedTruckNameList.Add(Constants.AllTrucksString);
+            expectedTruckNameList.Add("TestTruck3");
+
+            // Act
+            JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString,"TestTruck3","Friday", "Lunch");
+
+            // Assert
+            dynamic jsonResult = result.Data;
+            CollectionAssert.AreEqual(expectedNeighborhoodList, jsonResult.FilteredNeighborhoods);
+            CollectionAssert.AreEqual(expectedTruckNameList, jsonResult.FilteredTrucks);
+            var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
+            Assert.IsNotNull(pins);
+            Assert.AreEqual(2, pins.Count);
+            Assert.AreEqual("TestTruck3", pins[0].truckName);
+            Assert.AreEqual("SoWa Open Market, 500 Harrison Avenue", pins[0].location);
+            Assert.AreEqual((Double)(-71.0674873), pins[0].longitude);
+            Assert.AreEqual(2, pins[0].preference);
+            Assert.AreEqual("TestTruck3", pins[1].truckName);
+            Assert.AreEqual("NEU, on Opera Place at Huntington Ave", pins[1].location);
+            Assert.AreEqual((Double)(-71.0913604), pins[1].longitude);
+            Assert.AreEqual(2, pins[1].preference);
         }
 
         [TestMethod]
@@ -571,12 +675,24 @@ namespace NextMile02.Tests.Controllers
                 new MockPreferenceRepository(),
                 new MockTruckDataRepository(testEvents),
                 new MockCurrentUser());
+            
+            //Expected Dropdown lists
+            var expectedNeighborhoodList = new List<String>();
+            expectedNeighborhoodList.Add(Constants.AllNeighborhoodsString);
+            expectedNeighborhoodList.Add("SoWa Open Market, 500 Harrison Avenue");
+
+            var expectedTruckNameList = new List<String>();
+            expectedTruckNameList.Add(Constants.AllTrucksString);
+            expectedTruckNameList.Add("TestTruck2");
 
             // Act
             JsonResult result = controller.FilterTrucks(Constants.AllNeighborhoodsString, truckname: "TestTruck2", day: "Friday", meal: "Lunch");
 
             // Assert
             dynamic jsonResult = result.Data;
+            CollectionAssert.AreEqual(expectedNeighborhoodList, jsonResult.FilteredNeighborhoods);
+            CollectionAssert.AreEqual(expectedTruckNameList, jsonResult.FilteredTrucks);
+
             var pins = jsonResult.PushpinFilteredData as List<Models.TruckPushpinInfo>;
             Assert.IsNotNull(pins);
             Assert.AreEqual(pins.Count, 1);
