@@ -97,19 +97,19 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
 // If known location INSIDE Boston, recenter and zoom to user's location
 function ShowUserPosition(user) {
 
-    // Recenter map if user is located in Boston
-    if (map.getBounds().contains(user.position.coords)) {
-        alert("You're in Boston!");
-        map.setView({
-            zoom: 15,
-            center: user.center
-        });
-    }
-    else {
-        alert("You're NOT in Boston!");
+    //// Recenter map if user is located in Boston
+    //if (map.getBounds().contains(user.position.coords)) {
+    //    alert("You're in Boston!");
+    //    map.setView({
+    //        zoom: 15,
+    //        center: user.center
+    //    });
+    //}
+    //else {
+    //    alert("You're NOT in Boston!");
         //set to Boston latitude and longitude
         map.setView({ center: new Microsoft.Maps.Location(42.347168, -71.080233), zoom: 13 });
-    }
+    //}
 
     // Create a Pushpin at the user's location
     var userPushpin = new Microsoft.Maps.Pushpin(user.center);

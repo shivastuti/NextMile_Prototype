@@ -89,7 +89,7 @@ namespace NextMile02.Controllers
             ViewData["CurrentNeighborhoods"] = new SelectList(currentNeighborhoods, Constants.AllNeighborhoodsString);
             ViewData["CurrentTrucks"] = new SelectList(currentTrucknames, Constants.AllTrucksString);
             ViewData["MealTimes"] = new SelectList(new[] { "Breakfast", "Lunch", "Dinner", "Late Night" }, meal);
-            ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday", "Sunday" }, day);
+            ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, day);
             return View("Index", ViewData);
         }
 
