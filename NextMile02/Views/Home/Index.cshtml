@@ -9,32 +9,44 @@
             ViewBag.Title = "NextMile - The FoodTruck Search Engine";
             Layout = "~/Views/Shared/_Layout.cshtml";
         }
-
-        <fb:login-button autologoutlink="true" perms="read_friendlists, create_event, email, publish_stream"></fb:login-button>
-
+        <div class="col-sm-12" id="fblogin">
+            <fb:login-button autologoutlink="true" perms="read_friendlists, create_event, email, publish_stream">
+            </fb:login-button>
+        </div>
         <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
         <p class="hidden">Facebook User Id: @Session["uid"]</p>
         <p class="hidden">Flag : @Session["flag"] </p>
 
         <div ng-include="'/Account/UserDetails'" ng-show='\@Session["flag"] == 0'></div>
-        <div class="row glibc">
-            <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+        <div class="row glib">
+            <div class="col-sm-12">
+                <span class="h4">Please select one of the following</span>
             </div>
-            <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
-            </div>
-            <div class="col-sm-2 padded-custom">
-                @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
-            </div>
-            <div class="col-sm-5 padded-custom">
-                @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+        </div>
+            <div class="row ">
+                <div class="col-sm-2 ">
+                    @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+                </div>
+
+
+                <div class="col-sm-2 ">
+                    @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+                </div>
+
+
+                <div class="col-sm-2 ">
+                    @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+                </div>
+
+                <div class="col-sm-5 ">
+                    @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks()" })
+                </div>
             </div>
         </div>
         <div id="myMap" class="col-sm-12 glibc"></div>
         <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
         <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
-    </div>
+    
 </body>
 
 @*Javascript calls*@

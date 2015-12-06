@@ -385,6 +385,11 @@ margin-top: 0;
 .glibc {
     margin-top: 80px;
 }
+#fblogin > div
+{
+
+padding-top :60px;
+}
 #form1 {
     margin-top: 100px;
 }
@@ -516,9 +521,7 @@ display: none;
 /* Portrait & landscape phone */
 @media (max-width: 480px) {
 
-    #neighbourhoodList {
-        width:100%;
-    }
+   
     #myMap{
         max-width:400px;
     }
@@ -531,9 +534,7 @@ display: none;
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-     #neighbourhoodList {
-        max-width:80%;
-    }
+    
       #myMap{
         max-width:728px;
     }
@@ -545,9 +546,7 @@ display: none;
 }
 /* up to small desktop */
 @media (max-width: 979px) {
-     #neighbourhoodList {
-        max-width:80%;
-    }
+    
       #myMap{
         max-width:939px;
     }
@@ -555,9 +554,7 @@ display: none;
 
 /* small desktop and up*/
 @media (min-width: 979px) {
-     #neighbourhoodList {
-        max-width:80%;
-    }
+   
     #myMap{
         min-width:939px;
     }
@@ -565,9 +562,7 @@ display: none;
 
 /* Large desktop */
 @media (min-width: 1200px) {
-     #neighbourhoodList {
-        max-width:80%;
-    }
+    
 
    #myMap{
         min-width:1160px;
