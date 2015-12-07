@@ -93,7 +93,15 @@ function InitialiseFacebook(appId)
             });
         }
     };
-    
+    $(".jumper").on("click", function (e) {
+
+        e.preventDefault();
+
+        $("body, html").animate({
+            scrollTop: $($(this).attr('href')).offset().top
+        }, 600);
+
+    });
     (function (d)
     {
         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];

@@ -16,37 +16,44 @@
     <section id="intro" class="intro" data-speed="6" data-type="background">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 well well-sm" >
                     <h1 class="searchtitle1"><strong>NEXTMILE</strong>  </h1>
                 </div>
                 <div class="col-sm-12">
                     <h2 class="searchtitle"> Search for the nearest Food Truck </h2>
                 </div>
-                <a href="#search" class="btn btn-default btn-lg">Continue</a>
+                <div class="text-center">
+                    <a href="#search" class="jumper btn btn-default btn-lg">Continue</a>
+                </div> 
+                
             </div>
         </div>
     </section>
 
     <section id="search" class="search" data-speed="4" data-type="background">
         <div class="container">
-            <a id="search"></a>
+            
             @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
-            <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid " id="indexcontainer">
+            <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid">
                 @{
                     ViewBag.Title = "NextMile - The FoodTruck Search Engine";
                     Layout = "~/Views/Shared/_Layout.cshtml";
                 }
-                <div class="col-sm-1 pull-right" id="fblogin">
-                    <fb:login-button autologoutlink="true" perms="read_friendlists, create_event, email, publish_stream ">
-                    </fb:login-button>
+                <div class="row pad">
+                    <div class="col-sm-1 pull-right" id="fblogin">
+                        <fb:login-button autologoutlink="true" perms="read_friendlists, create_event, email, publish_stream ">
+                        </fb:login-button>
+                    </div>
                 </div>
+               
+                <div id="scroll1"></div>
                 <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
                 <p class="hidden">Facebook User Id: @Session["uid"]</p>
                 <p class="hidden">Flag : @Session["flag"] </p>
 
                 <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
-                <div class="row glib">
-                    <div class="row topgap paddingcs">
+                <div class="row ">
+                   
                         <div class="col-sm-2 ">
                             @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
@@ -60,20 +67,24 @@
                         <div class="col-sm-5 ">
                             @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
-                    </div>
+                   
                 </div>
             </div>
             <div id="alert1" class="alert alert-danger fade in" style="display:inherit;">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <span id="loginPrompt"></span>
             </div>
-            <div id="myMap" class="col-sm-12 glibc"></div>
+            <div id="myMap" class="col-sm-12 glib"></div>
             <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
             <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
         </div>
     </section>
     <section id="detail" class="detail" data-speed="6" data-type="background">
         <div class="container">
+            <div id="detailid">
+                <h1> Hi there</h1>
+            </div>
+            
         </div>
     </section>
 

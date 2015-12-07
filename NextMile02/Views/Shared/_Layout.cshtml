@@ -21,8 +21,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>
+                     <a href="#search" class="jumper">Search Foodtrucks</a>
+                    </li>
+                    <li>
+                        <a href="#detailid" class="jumper">About</a>
+                    </li>
                     
 
                 </ul>
@@ -31,7 +35,7 @@
     </div>
 
     <!--Main Body-->
-    <div class="body-content" style="margin:4%;">
+    <div class="body-content" style="margin:2%;">
         @RenderBody()
         <hr />
        
