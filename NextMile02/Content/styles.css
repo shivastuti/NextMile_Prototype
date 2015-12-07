@@ -521,7 +521,7 @@ display: none;
    Media Queries
    -------------------------------------- */
 #intro { 
-    background: url(/Content/Images/intro.png) 50% 0 fixed; 
+    background: url(/Content/Images/intro.jpg) 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -529,7 +529,7 @@ display: none;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     padding: 100px 0;
 }
-#home { 
+#search { 
     background: url(/Content/Images/home.jpg) 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
@@ -538,7 +538,7 @@ display: none;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     padding: 200px 0;
 }
-#about { 
+#detail { 
     background: url(/Content/Images/about.png) 50% 0 fixed; 
     height: auto;
     margin: 0 auto; 
@@ -550,7 +550,7 @@ display: none;
 }
 .searchtitle{
     padding: .2%;
-    margin: 15px 0;
+    margin: 180px 0;
     color: white; 
     font-size: 36px; 
     text-align: center;

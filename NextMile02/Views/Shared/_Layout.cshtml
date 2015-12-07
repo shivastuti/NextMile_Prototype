@@ -21,13 +21,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Introduction", "Index", "Home", new { area = "" }, new { @class = "intro" })</li>
+                    <li><a href='@Url.Action("Index", "Home", "#intro")'>Introduction</a></li>
+                    <li><a href='@Url.Action("Index", "Home", "#search")'>Search Foodtrucks</a></li>
+                    <li><a href='@Url.Action("Index", "Home", "#detail")'>About</a></li>
+                       
 
-                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    
 
-                </ul>
+</ul>
             </div>
         </div>
     </div>

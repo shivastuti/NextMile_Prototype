@@ -15,10 +15,10 @@
             </div>
         </div>
     </section>
-    <section id="home"class="home" data-speed="4" data-type="background">
+    <section id="search"class="search" data-speed="4" data-type="background">
         <div class="container">
             @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
-            <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid glib" id="indexcontainer">
+            <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid " id="indexcontainer">
                 @{
                 ViewBag.Title = "NextMile - The FoodTruck Search Engine";
                 Layout = "~/Views/Shared/_Layout.cshtml";
@@ -70,7 +70,14 @@
             <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
 </div>
 </section>
+    <section id="detail" class="detail" data-speed="6" data-type="background">
+        <div class="container">
+
+        </div>
+    </section>
+
 </body>
+
 
 @*Javascript calls*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
