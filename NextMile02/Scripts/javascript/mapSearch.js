@@ -36,7 +36,7 @@ $(document).ready(function () {
         }); // end window scroll
     });  // end section function
 
-    // $("#alert1").hide();
+    
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -112,6 +112,17 @@ $(document).ready(function () {
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
     locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
+    $("#alert1").hide();
+    if ($("#loginPrompt").value == "") {
+        $("#alert1").hide();
+    }
+
+    $('.close').click(function () {
+
+        $('.alert1').hide();
+
+    });
+
 });
 
 //pushpin clustered map view
@@ -415,6 +426,7 @@ function hideInfobox() {
     }*/
 }
 
+
 //function to Upvote or Downvote a truck
 function btnVoteHandler(pushpin, vote) {
     var truckName = pushpin.Title;
@@ -437,7 +449,7 @@ function btnVoteHandler(pushpin, vote) {
 }
 
 function showCustomMessage(message){
-    $("#loginPrompt").show();
+    $("#alert1").show();
     $("#loginPrompt").html(message);
 }
 
