@@ -8,8 +8,28 @@ var allTrucknames = 'All Trucks';
 var pinClusterer = null;
 
 $(document).ready(function () {
-    
-    
+
+    // cache the window object
+    $window = $(window);
+
+    $('section[data-type="background"]').each(function () {
+        // declare the variable to affect the defined data-type
+        var $scroll = $(this);
+
+        $(window).scroll(function () {
+            // HTML5 proves useful for helping with creating JS functions!
+            // also, negative value because we're scrolling upwards                             
+            var yPos = -($window.scrollTop() / $scroll.data('speed'));
+
+            // background position
+            var coords = '50% ' + yPos + 'px';
+
+            // move the background
+            $scroll.css({ backgroundPosition: coords });
+        }); // end window scroll
+    });  // end section function
+
+   // $("#alert1").hide();
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -392,17 +412,21 @@ function btnVoteHandler(pushpin, vote) {
         success: function (data) {
             if (data.success) {
                 changePushPinColor(pushpin, data);
+                
+                
             } else {
                 $("#loginPrompt").show();
                 var loginmessage = data.message;
                 $("#loginPrompt").html(loginmessage);
                
             }
+            
         },
         error: function () {
             alert("Preference Not Successfully Saved"); // will be removed if everything works
         }
     });
+
 }
 
 /*Dynamically change the pin truck color on selection */

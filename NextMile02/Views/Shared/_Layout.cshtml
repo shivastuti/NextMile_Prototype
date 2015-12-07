@@ -21,8 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Introduction", "Index", "Home", new { area = "" }, new { @class = "intro" })</li>
+
+                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    
 
                 </ul>
             </div>
@@ -30,7 +33,7 @@
     </div>
 
     <!--Main Body-->
-    <div class="container-fluid body-content" style="margin:4%;">
+    <div class="body-content" style="margin:4%;">
         @RenderBody()
         <hr />
        

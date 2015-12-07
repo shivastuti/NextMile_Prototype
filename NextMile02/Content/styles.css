@@ -209,7 +209,7 @@ sys {
 body{
      -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-   background:url('/Content/Images/bkgrnd.jpg');
+ 
 }
 html,body{
     position: relative;
@@ -520,13 +520,53 @@ display: none;
 /* --------------------------------------
    Media Queries
    -------------------------------------- */
-
+#intro { 
+    background: url(/Content/Images/intro.png) 50% 0 fixed; 
+    height: auto;  
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 100px 0;
+}
+#home { 
+    background: url(/Content/Images/home.jpg) 50% 0 fixed; 
+    height: auto;  
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 200px 0;
+}
+#about { 
+    background: url(/Content/Images/about.png) 50% 0 fixed; 
+    height: auto;
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 100px 0;
+    color: #fff;
+}
+.searchtitle{
+    padding: .2%;
+    margin: 15px 0;
+    color: white; 
+    font-size: 36px; 
+    text-align: center;
+    text-shadow: 0 0 15px black, 0 0 25px black, 0 0 35px black;
+}
 #myMap > div{
     max-width:100%;
 }
+#fblogin > div{
+    float:right;
+}
 /* Portrait & landscape phone */
 @media (max-width: 480px) {
-
+    #myMap > div{
+    max-width:100%;
+}
    
    
     #indexcontainer{
@@ -538,7 +578,9 @@ display: none;
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-    
+    #myMap > div{
+    max-width:100%;
+}
     
      #indexcontainer{
         margin-top:100px;
@@ -548,20 +590,26 @@ display: none;
 }
 /* up to small desktop */
 @media (max-width: 979px) {
-    
+    #myMap > div{
+    max-width:100%;
+}
      
 }
 
 /* small desktop and up*/
 @media (min-width: 979px) {
    
-  
+  #myMap > div{
+    max-width:100%;
+}
 }
 
 /* Large desktop */
 @media (min-width: 1200px) {
     
-
+    #myMap > div{
+    max-width:100%;
+}
  
 
 	
