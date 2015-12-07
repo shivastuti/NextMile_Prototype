@@ -297,6 +297,28 @@ namespace NextMile02.Controllers
             return Json(new { success = successVal, message = message, newIconColor = color });
         }
 
+        [HttpPost]
+        public JsonResult GetPreferencesForUser()
+        {
+            // Obtain Facebook UserId from Session state uid if logged in
+            string loggedinuser = _currentUser.UserId();
+
+            // Use logged in user if available
+            string userid =
+                loggedinuser != null ? loggedinuser :
+                testuser;
+
+            var preferences = new List<Models.Preference.PreferenceData>();
+            if (userid != null)
+            {
+                // Obtain User Preferences
+                preferences = _preferenceStore.GetPreferencesForUser(userid).ToList();
+            }
+
+            // Return filtered truck pins
+            return Json(new { PreferenceData = preferences }, JsonRequestBehavior.AllowGet);
+        }
+
         public ViewResult About()
         {
             ViewBag.Message = "NextMile team. Northeastern University";
