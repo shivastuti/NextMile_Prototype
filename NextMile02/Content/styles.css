@@ -521,7 +521,7 @@ display: none;
    Media Queries
    -------------------------------------- */
 #intro { 
-    background: url(/Content/Images/img1.jpg) 50% 0 fixed; 
+    background: url(/Content/Images/introbkgrnd.jpg) 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
