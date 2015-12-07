@@ -153,13 +153,14 @@ display: none;
 
 }
 
+
         
 /* --------------------------------------
    Media Queries
    -------------------------------------- */
 
 #intro { 
-    background: url('/Content/Images/foodimg.jpg') 50% 0 fixed; 
+    background: url('/Content/Images/intro.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -378,4 +379,8 @@ only screen and (min-device-pixel-ratio : 1.5) {
     #indexcontainer{
         margin-top:40px;
     }
+}
+.foot{
+        background-color: black;
+    color: bisque
 }
