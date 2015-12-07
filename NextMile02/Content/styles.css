@@ -160,7 +160,7 @@ display: none;
    -------------------------------------- */
 
 #intro { 
-    background: url('~/Content/Images/intro.jpg') 50% 0 fixed; 
+    background: url('/Content/Images/intro.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -176,7 +176,7 @@ display: none;
 }
 
 #search { 
-    background: url('~/Content/Images/home.jpg') 50% 0 fixed; 
+    background: url('/Content/Images/home.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 4% auto; 
     width: 100%; 
@@ -184,14 +184,15 @@ display: none;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     padding: 2% 0;
 }
+
 #detail { 
-    background: url('~/Content/Images/about.png') 50% 0 fixed; 
+    background: url('/Content/Images/about.png') 50% 0 fixed; 
     height: auto;
-    margin: 0 auto; 
+    margin: 4% auto; 
     width: 100%; 
     position: relative; 
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    padding: 100px 0;
+    padding: 2% 0;
     color: #fff;
 }
 h1{
