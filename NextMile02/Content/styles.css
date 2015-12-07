@@ -37,7 +37,7 @@ margin-top: 0;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
     .pad{
-        padding: 2%;
+        padding: 40px;
     }
 /* --------------------------------------
    Navbar
@@ -167,6 +167,9 @@ display: none;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     padding: 100px 0;
 }
+.dropdownrow{
+    margin-left: 1% !important;
+}
 #search { 
     background: url('/Content/Images/home.jpg') 50% 0 fixed; 
     height: auto;  
@@ -223,6 +226,11 @@ and (max-device-width : 480px) {
     max-width:100%;
 }
    
+ .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
    
     #indexcontainer{
         margin-top:40px;
@@ -236,7 +244,12 @@ and (min-width : 321px) {
  #myMap > div{
     max-width:100%;
 }
-   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
    
     #indexcontainer{
         margin-top:40px;
@@ -250,7 +263,12 @@ and (max-width : 320px) {
  #myMap > div{
     max-width:100%;
 }
-   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
    
     #indexcontainer{
         margin-top:40px;
@@ -266,7 +284,12 @@ and (max-device-width : 1024px) {
     max-width:100%;
 }
    
-   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
     #indexcontainer{
         margin-top:40px;
     }
@@ -281,7 +304,12 @@ and (orientation : landscape) {
  #myMap > div{
     max-width:100%;
 }
-   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
    
     #indexcontainer{
         margin-top:40px;
@@ -297,7 +325,12 @@ and (orientation : portrait) {
  #myMap > div{
     max-width:100%;
 }
-   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
    
     #indexcontainer{
         margin-top:40px;

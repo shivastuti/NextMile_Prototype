@@ -23,7 +23,7 @@
                     <h2 class="searchtitle"> Search for the nearest Food Truck </h2>
                 </div>
                 <div class="text-center">
-                    <a href="#search" class="jumper btn btn-default btn-lg">Continue</a>
+                    <a href="#search" class="jumper btn btn-success btn-lg">Continue</a>
                 </div> 
                 
             </div>
@@ -52,19 +52,19 @@
                 <p class="hidden">Flag : @Session["flag"] </p>
 
                 <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
-                <div class="row ">
+                <div class="row dropdownrow">
                    
-                        <div class="col-sm-2 ">
+                        <div class="col-sm-2 div1">
                             @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
-                        <div class="col-sm-2 ">
+                        <div class="col-sm-2 div2">
                             @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
-                        <div class="col-sm-2 ">
+                        <div class="col-sm-2 div3 ">
                             @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
 
-                        <div class="col-sm-5 ">
+                        <div class="col-sm-5 div4">
                             @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
                         </div>
                    
