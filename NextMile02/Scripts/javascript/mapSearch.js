@@ -36,7 +36,11 @@ $(document).ready(function () {
         }); // end window scroll
     });  // end section function
 
-    
+    $(function () {
+        $(".custom-close").on('click', function () {
+            $('#alert1').alert('hide');
+        });
+    });
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -112,17 +116,8 @@ $(document).ready(function () {
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
     locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
-    $("#alert1").hide();
-    if ($("#loginPrompt").value == "") {
-        $("#alert1").hide();
-    }
-
-    $('.close').click(function () {
-
-        $('.alert1').hide();
-
-    });
-
+    //$("#alert1").hide();
+    
 });
 
 //pushpin clustered map view
@@ -451,7 +446,14 @@ function btnVoteHandler(pushpin, vote) {
 function showCustomMessage(message){
     $("#alert1").show();
     $("#loginPrompt").html(message);
+   
 }
+
+
+
+$('.close').click(function () {
+    $(this).parent().removeClass('in'); // hides alert with Bootstrap CSS3 implem
+});
 
 /*Dynamically change the pin truck color on selection */
 function changePushPinColor(pushpin, data) {

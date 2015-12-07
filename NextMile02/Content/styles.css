@@ -160,7 +160,7 @@ display: none;
    -------------------------------------- */
 
 #intro { 
-    background: url('/Content/Images/intro.jpg') 50% 0 fixed; 
+    background: url('~/Content/Images/intro.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -171,8 +171,12 @@ display: none;
 .dropdownrow{
     margin-left: 1% !important;
 }
+.alert2{
+    margin-left: 3% !important;
+}
+
 #search { 
-    background: url('/Content/Images/home.jpg') 50% 0 fixed; 
+    background: url('~/Content/Images/home.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 4% auto; 
     width: 100%; 
@@ -181,7 +185,7 @@ display: none;
     padding: 2% 0;
 }
 #detail { 
-    background: url('/Content/Images/about.png') 50% 0 fixed; 
+    background: url('~/Content/Images/about.png') 50% 0 fixed; 
     height: auto;
     margin: 0 auto; 
     width: 100%; 
