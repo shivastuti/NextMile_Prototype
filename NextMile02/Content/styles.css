@@ -579,9 +579,11 @@ h1{
 #fblogin > div{
     float:right;
 }
-/* Portrait & landscape phone */
-@media (max-width: 480px) {
-    #myMap > div{
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+/* Styles */
+ #myMap > div{
     max-width:100%;
 }
    
@@ -589,45 +591,122 @@ h1{
     #indexcontainer{
         margin-top:40px;
     }
-
-	
 }
 
-/* Landscape phone to portrait tablet */
-@media (max-width: 768px) {
-    #myMap > div{
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+/* Styles */
+ #myMap > div{
     max-width:100%;
 }
-    
-     #indexcontainer{
-        margin-top:100px;
-    }
-
-	
-}
-/* up to small desktop */
-@media (max-width: 979px) {
-    #myMap > div{
-    max-width:100%;
-}
-     
-}
-
-/* small desktop and up*/
-@media (min-width: 979px) {
    
-  #myMap > div{
-    max-width:100%;
-}
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
 }
 
-/* Large desktop */
-@media (min-width: 1200px) {
-    
-    #myMap > div{
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+/* Styles */
+ #myMap > div{
     max-width:100%;
 }
- 
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
 
-	
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
 }

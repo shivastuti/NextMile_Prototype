@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @{
     ViewBag.Title = "Index";
 }
@@ -14,13 +16,17 @@
                 <div class="col-sm-12">
                     <h2 class="searchtitle"> Search for the nearest Food Truck </h2>
                 </div>
+                <a href="#search" class="btn btn-default btn-lg">Continue</a>
+
                 </div>
 
             </div>
-        </div>
+      
     </section>
+   
     <section id="search"class="search" data-speed="4" data-type="background">
         <div class="container">
+            <a id="search"></a>
             @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
             <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid " id="indexcontainer">
                 @{
