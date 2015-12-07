@@ -1,4 +1,11 @@
 ﻿
+/*      Copyright (c) 2015
+ *      by NextMile Team(Jason Campoli, Shivastuti Kohl, Smitha Bangalore Naresh), 
+ *      College of Computer and Information Science, Northeastern University, Boston MA
+ *
+ *      This software is the intellectual property of NextMile Team
+ *
+ */
 var map = null, infobox = null, datalayer = null;
 var bestview = null;
 var pushPinWidth = 35;
@@ -29,7 +36,7 @@ $(document).ready(function () {
         }); // end window scroll
     });  // end section function
 
-   // $("#alert1").hide();
+    // $("#alert1").hide();
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -56,19 +63,23 @@ $(document).ready(function () {
                 if (e.targetType == 'pushpin') {
                     displayClusteredInfoBox(pushpin, cluster);
                 }
+                return false;
             });
             Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
                 if (e.targetType == 'pushpin') {
                     displayClusteredInfoBox(pushpin, cluster);
                 }
+                return false;
             });
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
-                    hideClusteredInfoBox(pushpin, cluster);
+                hideClusteredInfoBox(pushpin, cluster);
+                return false;
             });
             Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
                 if (e.targetType == 'pushpin') {
                     displayClusteredInfoBox(pushpin, cluster);
                 }
+                return false;
             });
         },
         onPinToMap: function (pushpin) {
@@ -76,19 +87,23 @@ $(document).ready(function () {
                 if (e.targetType == 'pushpin') {
                     displayInfobox(pushpin);
                 }
+                return false;
             });
             Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
                 if (e.targetType == 'pushpin') {
                     displayInfobox(pushpin);
                 }
+                return false;
             });
             Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
-                    hideInfobox();                
+                hideInfobox();
+                return false;
             });
             Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
                 if (e.targetType == 'pushpin') {
                     displayInfobox(pushpin, cluster);
                 }
+                return false;
             });
         }
     });
@@ -118,11 +133,11 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
     //render the clustered map
     pinClusterer.cluster(AllPushpinInfoData);
 
-    datalayer = pinClusterer.layer; 
+    datalayer = pinClusterer.layer;
 
-    // Utilize the user's location if available
-    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
-    locProvider.getCurrentPosition({ successCallback: ShowUserPosition }, { errorCallback: onPositionError });
+    var msg = AllPushpinInfoData.length;
+    if (AllPushpinInfoData.length == 0) { msg = "No" }
+    showCustomMessage(msg + " trucks found!");
 }
 
 // Shows the user's location as Pin
@@ -163,18 +178,18 @@ function ShowUserPosition(user, option) {
         });
 
     Microsoft.Maps.Events.addHandler(userPushpin, 'mouseover', function (e) {
-        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
+        if (e.targetType == "pushpin") { displayUserInfobox(e.target); return false }
     });
 
     Microsoft.Maps.Events.addHandler(userPushpin, 'click', function (e) {
-        if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
+        if (e.targetType == "pushpin") { hideUserInfobox(e.target); return false }
     });
 
     Microsoft.Maps.Events.addHandler(userPushpin, 'viewchange', function (e) {
-        if (e.targetType == "pushpin") { hideUserInfobox(e.target) }
+        if (e.targetType == "pushpin") { hideUserInfobox(e.target); return false }
     });
     Microsoft.Maps.Events.addHandler(userPushpin, 'touchstart', function (e) {
-        if (e.targetType == "pushpin") { displayUserInfobox(e.target) }
+        if (e.targetType == "pushpin") { displayUserInfobox(e.target); return false }
     });
 
     map.entities.push(userPushpin);
@@ -234,7 +249,7 @@ function displayClusteredInfoBox(pushpin, cluster) {
         width: infoBoxWidth, height: infoBoxHeight,
         visible: true,
         offset: new Microsoft.Maps.Point(0, 25),
-        actions: [{ label: 'Double Click to Zoom In', eventHandler: function (mouseEvent) { cluster.zoom() } }]
+        actions: [{ label: 'Double Click to Zoom In', eventHandler: function (mouseEvent) { cluster.zoom(); mouseEvent.preventDefault(); return false } }]
     });
 
     infoboxAdjustToMapView(pushpin);
@@ -279,17 +294,17 @@ function renderMap(PushpinInfoData) {
         map.entities.push(pushpin);
 
         Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
-            if (e.targetType == "pushpin") { displayInfobox(e.target) }
+            if (e.targetType == "pushpin") { displayInfobox(e.target); return false }
         });
         // Hide the info box when the map is moved.
         Microsoft.Maps.Events.addHandler(map, 'viewchange', function (e) {
-            if (e.targetType == "pushpin") { hideInfobox(e.target) }
+            if (e.targetType == "pushpin") { hideInfobox(e.target); return false }
         });
         Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', function (e) {
-            if (e.targetType == "pushpin") { displayInfobox(e.target) }
+            if (e.targetType == "pushpin") { displayInfobox(e.target); return false }
         });
         Microsoft.Maps.Events.addHandler(pushpin, 'touchstart', function (e) {
-            if (e.targetType == "pushpin") { displayInfobox(e.target) }
+            if (e.targetType == "pushpin") { displayInfobox(e.target); return false }
         });
         //Microsoft.Maps.Events.addHandler(pushpin, 'mouseout', hideInfobox); -- To do giving timer
 
@@ -320,7 +335,6 @@ function displayInfoboxSettings(pushpin) {
     var infoBoxDesciption = pushpin.Description;
     var infoBoxTitle = pushpin.Title;
     var strLength = infoBoxDesciption.length + infoBoxTitle.length;
-    console.log(infoBoxTitle + " " + infoBoxDesciption);
 
     if (strLength > 70)
         infoBoxHeight = 160;
@@ -334,8 +348,8 @@ function displayInfoboxSettings(pushpin) {
     infobox.setOptions({
         visible: true, title: infoBoxTitle, description: infoBoxDesciption, width: infoBoxWidth, height: infoBoxHeight,
         offset: new Microsoft.Maps.Point(0, 25),
-        actions: [{ label: '<div id="Upvote"><img class="Image" src="/Content/Images/Upvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "1") } },
-        { label: '<div id="Downvote"><img class="Image" src="/Content/Images/Downvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "2") } }
+        actions: [{ label: '<div id="Upvote"><img class="Image" src="/Content/Images/Upvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "1"); mouseEvent.preventDefault(); return false } },
+        { label: '<div id="Downvote"><img class="Image" src="/Content/Images/Downvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "2"); mouseEvent.preventDefault(); return false } }
         ]
     });
 }
@@ -412,26 +426,23 @@ function btnVoteHandler(pushpin, vote) {
         success: function (data) {
             if (data.success) {
                 changePushPinColor(pushpin, data);
-                
-                
             } else {
-                $("#loginPrompt").show();
-                var loginmessage = data.message;
-                $("#loginPrompt").html(loginmessage);
-               
+                showCustomMessage(data.message);
             }
-            
         },
         error: function () {
-            alert("Preference Not Successfully Saved"); // will be removed if everything works
+            showCustomMessage("Preference Not Successfully Saved");
         }
     });
+}
 
+function showCustomMessage(message){
+    $("#loginPrompt").show();
+    $("#loginPrompt").html(message);
 }
 
 /*Dynamically change the pin truck color on selection */
 function changePushPinColor(pushpin, data) {
-    //console.log("changePushPinColor" + pushpin.Title + " " + data.newIconColor);
     if (data.newIconColor == 0) {
         pushpin.setOptions({ icon: "/Content/Images/Blue_Truck.png" });
     } else if (data.newIconColor == 1) {
@@ -444,7 +455,6 @@ function changePushPinColor(pushpin, data) {
     changed truck data to be stored in pin_cluster truckPinData*/
     var dropList = document.getElementById('neighbourhoodList');
     if (dropList.options[dropList.selectedIndex].value === allNeighborhoods) {
-        //console.log("show all");
         for (i = 0; i < pinClusterer._truckPinData.length; i++) {
             if (pinClusterer._truckPinData[i].truckName === pushpin.Title) {
                 pinClusterer._truckPinData[i].preference = parseInt(data.newIconColor);
@@ -464,8 +474,6 @@ function RenderFilteredTrucks() {
     var dropListTruckName = document.getElementById('foodTruckName');
     var trucknameSelected = dropListTruckName.options[dropListTruckName.selectedIndex].value;
 
-    console.log(neighborhoodSelected + " " + mealSelected + " " + daySelected + " " + trucknameSelected);
-
     $.ajax({
         url: "../../Home/FilterTrucks",
         type: "POST",
@@ -473,13 +481,10 @@ function RenderFilteredTrucks() {
         data: "neighborhood=" + encodeURIComponent(JSON.stringify(neighborhoodSelected)) + "&truckname=" + encodeURIComponent(JSON.stringify(trucknameSelected)) + "&day=" + JSON.stringify(daySelected) + "&meal=" + JSON.stringify(mealSelected),
         success: function (data) {
             map.entities.clear();
-            removeOptions(document.getElementById('neighbourhoodList'));
-            removeOptions(document.getElementById('foodTruckName'));
             populateTruckNameDropDownList(data.FilteredTrucks, trucknameSelected);
-            populateNeighborhoodDropDownList(data.FilteredNeighborhoods,neighborhoodSelected);
+            populateNeighborhoodDropDownList(data.FilteredNeighborhoods, neighborhoodSelected);
             if (neighborhoodSelected === allNeighborhoods) {
-                //Pin Clustered Map View
-                /*Show Clustered Pushpins Map view - For 'Show All' option*/
+                //Show Clustered Pushpins Map view - For 'Show All' option
                 if (pinClusterer != null) {
                     pinClusterer.reinitialize(map);
                     renderPushpinClusteredMap(data.PushpinFilteredData, pinClusterer);
@@ -501,24 +506,46 @@ function removeOptions(selectbox) {
 }
 
 function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
-    var truckNameData = FilteredTrucks ; 
-    console.log(truckNameData);
-    var dropdownListTN= document.getElementById('foodTruckName');
-    for (var i = 0; i < truckNameData.length; i++) {
+    var dropdownListTN = document.getElementById('foodTruckName');
+    //remove the old options
+    removeOptions(dropdownListTN);
+    //insert new options
+    for (var i = 0; i < FilteredTrucks.length; i++) {
         var optn = document.createElement("OPTION");
-        optn.text = optn.value = truckNameData[i];
+        optn.text = optn.value = FilteredTrucks[i];
         dropdownListTN.options.add(optn);
     }
+    //assign the selected value if present else show message no trucks found
+    if(FilteredTrucks.length == 1 && 
+        FilteredTrucks[0] == allTrucknames && 
+        selectedTruckName != allTrucknames){
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = selectedTruckName;
+        dropdownListTN.options.add(optn);
+    }
+
+    var msg = FilteredTrucks.length - 1;
+    if ((FilteredTrucks.length - 1) == 0) { msg = "No"}
+    showCustomMessage(msg + " trucks found!");
+
     dropdownListTN.value = selectedTruckName;
 }
 
 function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighborhood) {
-    var neighborhoodData = FilteredNeighborhood; 
-    console.log(neighborhoodData + " " + selectedNeighborhood);
     var dropdownListNeighborhood = document.getElementById('neighbourhoodList');
-    for (var i = 0; i < neighborhoodData.length; i++) {
+    //remove the old options
+    removeOptions(dropdownListNeighborhood);
+    //insert new options
+    for (var i = 0; i < FilteredNeighborhood.length; i++) {
         var optn = document.createElement("OPTION");
-        optn.text = optn.value = neighborhoodData[i];
+        optn.text = optn.value = FilteredNeighborhood[i];
+        dropdownListNeighborhood.options.add(optn);
+    }
+    if (FilteredNeighborhood.length == 1 &&
+        FilteredNeighborhood[0] == allNeighborhoods &&
+        selectedNeighborhood != allNeighborhoods) {
+        var optn = document.createElement("OPTION");
+        optn.text = optn.value = selectedNeighborhood;
         dropdownListNeighborhood.options.add(optn);
     }
     dropdownListNeighborhood.value = selectedNeighborhood;
