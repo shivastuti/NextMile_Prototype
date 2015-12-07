@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*      Copyright (c) 2015
+ *      by NextMile Team(Jason Campoli, Shivastuti Kohl, Smitha Bangalore Naresh), 
+ *      College of Computer and Information Science, Northeastern University, Boston MA
+ *
+ *      This software is the intellectual property of NextMile Team
+ *
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -135,7 +142,6 @@ namespace NextMile02.Controllers
             foreach (var group in groupedTrucks)
             {
                 double offset = padding;
-                //skip the first item and then add offset
                 foreach (var truck in group)
                 {
                     truck.latitude += offset;
@@ -293,7 +299,6 @@ namespace NextMile02.Controllers
                 successVal = false;
                 message = "Log In to use this feature";
             }
-
             return Json(new { success = successVal, message = message, newIconColor = color });
         }
 
@@ -327,8 +332,6 @@ namespace NextMile02.Controllers
         }
         public ViewResult Welcome()
         {
-            
-
             return View("Welcome", ViewBag);
         }
     }
