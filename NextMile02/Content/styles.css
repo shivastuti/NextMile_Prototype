@@ -521,7 +521,7 @@ display: none;
    Media Queries
    -------------------------------------- */
 #intro { 
-    background: url(/Content/Images/introbkgrnd.jpg) 50% 0 fixed; 
+    background: url('/Content/Images/introbkgrnd.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -530,7 +530,7 @@ display: none;
     padding: 100px 0;
 }
 #search { 
-    background: url(/Content/Images/home.jpg) 50% 0 fixed; 
+    background: url('/Content/Images/home.jpg') 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -539,7 +539,7 @@ display: none;
     padding: 200px 0;
 }
 #detail { 
-    background: url(/Content/Images/about.png) 50% 0 fixed; 
+    background: url('/Content/Images/about.png') 50% 0 fixed; 
     height: auto;
     margin: 0 auto; 
     width: 100%; 
