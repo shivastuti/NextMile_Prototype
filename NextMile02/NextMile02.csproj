@@ -163,6 +163,7 @@
     <Content Include="Content\Images\Green_Truck.png" />
     <Content Include="Content\Images\intro.jpg" />
     <Content Include="Content\Images\Red_Truck.png" />
+    <Content Include="Content\Images\up-arrow.png" />
     <Content Include="Content\Images\Upvote.png" />
     <Content Include="Content\pushpin.css" />
     <Content Include="favicon.ico" />
@@ -227,6 +228,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+<ItemGroup>
+    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
