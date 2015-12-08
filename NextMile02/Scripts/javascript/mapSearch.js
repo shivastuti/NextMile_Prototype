@@ -141,6 +141,10 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
 
     datalayer = pinClusterer.layer;
 
+    // Utilize the user's location if available
+    var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
+    locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "norecenter"); } }, { errorCallback: onPositionError });
+
     var msg = AllPushpinInfoData.length;
     if (AllPushpinInfoData.length == 0) { msg = "No" }
     showCustomMessage(msg + " trucks found!");

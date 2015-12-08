@@ -161,6 +161,7 @@
     <Content Include="Content\Images\Downvote.png" />
     <Content Include="Content\Images\food.png" />
     <Content Include="Content\Images\Green_Truck.png" />
+    <Content Include="Content\Images\intro.jpg" />
     <Content Include="Content\Images\Red_Truck.png" />
     <Content Include="Content\Images\Upvote.png" />
     <Content Include="Content\pushpin.css" />
