@@ -448,9 +448,8 @@ function btnVoteHandler(pushpin, vote) {
 }
 
 function showCustomMessage(message){
-    $("#alert1").show();
     $("#loginPrompt").html(message);
-   
+    $('#alert1').fadeIn().delay(3000).fadeOut();
 }
 
 

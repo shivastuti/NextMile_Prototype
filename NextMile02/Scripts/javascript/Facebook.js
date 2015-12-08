@@ -102,15 +102,24 @@ function InitialiseFacebook(appId)
         }, 600);
 
     });
-    $('#preferences').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+    (function () {
+        var infoModal = $('#preferences');
+        $('.modal-toggle').on('click', function () {
+            $.ajax({
+                type: "GET",
+                url: '/home/GetPreferencesForUser/' + $(this).data(),
+                dataType: 'json',
+                error: function (data) {
+                    var htmlData = '<ul><li>';
+                    htmlData += data.id;
+                    htmlData += '</li></ul>';
+                    infoModal.find('#modal-body')[0].innerHTML = htmlData;
+                    infoModal.modal();
+                }
+            });
+        });
+    })(jQuery);
+
     if (($(window).height() + 100) < $(document).height()) {
         $('#top-link-block').removeClass('hidden').affix({
             // how far to scroll down before link "slides" into view

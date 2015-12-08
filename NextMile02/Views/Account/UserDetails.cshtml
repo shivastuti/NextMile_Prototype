@@ -1,9 +1,25 @@
 ﻿@model NextMile02.Models.FacebookUserModel
-
+@{
+    Layout = null;
+}
 @{
     ViewBag.Title = "UserDetails";
     
 }
+@section meta {
+    <meta name="description" content="@ViewBag.Description">
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="@Url.Content("~/Content/images/auction.jpg")" />
+    <meta property="og:site_name" content="Cloud Auction Demo" />
+    <meta property="fb:admins" content="@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]" />
+    <meta property="og:url" content="@Request.Url" />
+    <link rel="canonical" href="@Url.Action("Index", "Auction", new RouteValueDictionary(new { area = "" }), Uri.UriSchemeHttps, Request.Url.Host)" />
+}
+<script type="text/javascript" src="//connect.facebook.net/@(System.Globalization.CultureInfo.CurrentCulture.ToString().Replace("-", "_"))/all.js"></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5666e82e279a64b3" async="async"></script>
 
 <div id="partialPlaceHolder">
     <div class="container target  jumbotron" style="background-color: rgba(0,0,0,0.5); color: whitesmoke;">
@@ -11,6 +27,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-5">
                     <h2 class="pull-left">Welcome! @Model.name</h2>
+                   
                      <button type="button" class="btn btn-success top" data-toggle="modal" data-target="#preferences" >View Preferences</button>
                      <button type="button" class="btn btn-success top">Contact us</button>
 
@@ -29,15 +46,8 @@
                     <h4 class="modal-title" id="exampleModalLabel">User Preferences</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                           
-                        </div>
-                        <div class="form-group">
-                           
-                        </div>
-                    </form>
-                </div>
+                    <input type="text" name="result" id="result" value="" />
+                         </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     
