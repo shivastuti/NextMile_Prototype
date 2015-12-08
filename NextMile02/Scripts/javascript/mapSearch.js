@@ -36,11 +36,6 @@ $(document).ready(function () {
         }); // end window scroll
     });  // end section function
 
-    $(function () {
-        $(".custom-close").on('click', function () {
-            $('#alert1').alert('hide');
-        });
-    });
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
@@ -116,7 +111,7 @@ $(document).ready(function () {
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
     locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
-    //$("#alert1").hide();
+    
     
 });
 
@@ -147,7 +142,7 @@ function renderPushpinClusteredMap(AllPushpinInfoData, pinClusterer) {
 
     var msg = AllPushpinInfoData.length;
     if (AllPushpinInfoData.length == 0) { msg = "No" }
-    showCustomMessage(msg + " trucks found!");
+    showCustomMessage(msg + " truck(s) found!");
 }
 
 // Shows the user's location as Pin
@@ -235,7 +230,7 @@ function onPositionError(err) {
 //Number of pins and truck names are displayed
 function displayClusteredInfoBox(pushpin, cluster) {
     infobox.setLocation(pushpin.getLocation());
-    var infoBoxTitle = cluster.locations.length + ' Trucks Found.';
+    var infoBoxTitle = cluster.locations.length + ' Truck(s) Found.';
     var truckNames = '';
     var numOfTrucks = cluster.truckNamesInCluster.length;
     var infoBoxWidth = 275;
@@ -448,8 +443,8 @@ function btnVoteHandler(pushpin, vote) {
 }
 
 function showCustomMessage(message){
-    $("#loginPrompt").html(message);
-    $('#alert1').fadeIn().delay(3000).fadeOut();
+   
+    $('#alert1').html("Status:   " + message).fadeIn().delay(3000).fadeOut();
 }
 
 
@@ -543,7 +538,7 @@ function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
 
     var msg = FilteredTrucks.length - 1;
     if ((FilteredTrucks.length - 1) == 0) { msg = "No"}
-    showCustomMessage(msg + " trucks found!");
+    showCustomMessage(msg + " truck(s) found!");
 
     dropdownListTN.value = selectedTruckName;
 }

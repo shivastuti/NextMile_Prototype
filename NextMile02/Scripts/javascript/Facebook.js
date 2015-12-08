@@ -118,6 +118,7 @@ function InitialiseFacebook(appId)
                 }
             });
         });
+        return false;
     })(jQuery);
 
     if (($(window).height() + 100) < $(document).height()) {
