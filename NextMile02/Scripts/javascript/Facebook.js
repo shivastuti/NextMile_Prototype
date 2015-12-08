@@ -121,12 +121,23 @@ function InitialiseFacebook(appId)
         return false;
     })(jQuery);
 
-    if (($(window).height() + 100) < $(document).height()) {
-        $('#top-link-block').removeClass('hidden').affix({
-            // how far to scroll down before link "slides" into view
-            offset: { top: 100 }
-        });
-    }
+    var amountScrolled = 300;
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > amountScrolled) {
+            $('a.back-to-top').fadeIn('slow');
+        } else {
+            $('a.back-to-top').fadeOut('slow');
+        }
+    });
+
+    $('a.back-to-top').click(function () {
+        $('html, body').animate({
+            scrollTop: 0
+        }, 700);
+        return false;
+    });
+
     (function (d)
     {
         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
