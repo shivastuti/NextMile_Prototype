@@ -1,5 +1,4 @@
-﻿
-/*      Copyright (c) 2015
+﻿/*      Copyright (c) 2015
  *      by NextMile Team(Jason Campoli, Shivastuti Kohl, Smitha Bangalore Naresh), 
  *      College of Computer and Information Science, Northeastern University, Boston MA
  *
@@ -111,8 +110,8 @@ $(document).ready(function () {
     // Utilize the user's location if available
     var locProvider = new Microsoft.Maps.GeoLocationProvider(map);
     locProvider.getCurrentPosition({ successCallback: function (position) { ShowUserPosition(position, "recenter"); } }, { errorCallback: onPositionError });
-    
-    
+
+
 });
 
 //pushpin clustered map view
@@ -170,7 +169,12 @@ function ShowUserPosition(user, option) {
     }
 
     // Create a Pushpin at the user's location
-    var userPushpin = new Microsoft.Maps.Pushpin(user.center);
+    var userPushpin = new Microsoft.Maps.Pushpin(user.center,
+         {
+             icon: "/Content/Images/Current_Loc.png", width: 30, height: 40
+
+         });
+    /*
     userPushpin.Title = "You are Here";
 
     // Add Infobox
@@ -195,10 +199,10 @@ function ShowUserPosition(user, option) {
     });
     Microsoft.Maps.Events.addHandler(userPushpin, 'touchstart', function (e) {
         if (e.targetType == "pushpin") { displayUserInfobox(e.target); return false }
-    });
+    });*/
 
     map.entities.push(userPushpin);
-    map.entities.push(userPinInfobox);
+    //map.entities.push(userPinInfobox);
 }
 
 function displayUserInfobox(e) {
@@ -442,8 +446,8 @@ function btnVoteHandler(pushpin, vote) {
     });
 }
 
-function showCustomMessage(message){
-   
+function showCustomMessage(message) {
+
     $('#alert1').html("Status:   " + message).fadeIn().delay(3000).fadeOut();
 }
 
@@ -528,16 +532,16 @@ function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
         dropdownListTN.options.add(optn);
     }
     //assign the selected value if present else show message no trucks found
-    if(FilteredTrucks.length == 1 && 
-        FilteredTrucks[0] == allTrucknames && 
-        selectedTruckName != allTrucknames){
+    if (FilteredTrucks.length == 1 &&
+        FilteredTrucks[0] == allTrucknames &&
+        selectedTruckName != allTrucknames) {
         var optn = document.createElement("OPTION");
         optn.text = optn.value = selectedTruckName;
         dropdownListTN.options.add(optn);
     }
 
     var msg = FilteredTrucks.length - 1;
-    if ((FilteredTrucks.length - 1) == 0) { msg = "No"}
+    if ((FilteredTrucks.length - 1) == 0) { msg = "No" }
     showCustomMessage(msg + " truck(s) found!");
 
     dropdownListTN.value = selectedTruckName;

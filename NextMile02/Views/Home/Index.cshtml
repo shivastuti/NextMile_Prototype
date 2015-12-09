@@ -17,7 +17,7 @@
     <section id="intro" class="intro" data-speed="6" data-type="background">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 well well-sm" >
+                <div class="col-sm-12 well well-sm">
                     <h1 class="searchtitle1"><strong>NEXTMILE</strong>  </h1>
                 </div>
                 <div class="col-sm-12">
@@ -25,15 +25,15 @@
                 </div>
                 <div class="text-center">
                     <a href="#search" class="jumper btn btn-success btn-lg">Continue</a>
-                </div> 
-                
+                </div>
+
             </div>
         </div>
     </section>
 
     <section id="search" class="search" data-speed="4" data-type="background">
         <div class="container">
-            
+
             @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
             <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid">
                 @{
@@ -46,7 +46,7 @@
                         </fb:login-button>
                     </div>
                 </div>
-               
+
                 <div id="scroll1"></div>
                 <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
                 <p class="hidden">Facebook User Id: @Session["uid"]</p>
@@ -54,25 +54,25 @@
 
                 <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
                 <div class="row dropdownrow">
-                   
-                        <div class="col-sm-2 div1">
-                            @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                        <div class="col-sm-2 div2">
-                            @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                        <div class="col-sm-2 div3 ">
-                            @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
 
-                        <div class="col-sm-5 div4">
-                            @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                   
+                    <div class="col-sm-2 div1">
+                        @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+                    <div class="col-sm-2 div2">
+                        @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+                    <div class="col-sm-2 div3 ">
+                        @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+
+                    <div class="col-sm-5 div4">
+                        @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+
                 </div>
             </div>
             <div id="alert1" class="alert alert-success" style="display:inherit;">
-                    </div>
+            </div>
             <div id="myMap" class="col-sm-12 glib"></div>
             <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
             <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
@@ -80,31 +80,29 @@
     </section>
     <section id="detail" class="detail" data-speed="6" data-type="background">
         <div class="container">
-            
-                <h1> The NextMile Team - Our Story</h1>
-            <div class="panel panel-body" >
+
+            <h1> The NextMile Team - Our Story</h1>
+            <div class="panel panel-body">
                 <p>
-                 Forged in the fiery quality oriented class of Managing Software Development,NextMile
-                 brings its idea,creativity and hardwork to the table with this application.We are a team 
-                of three people - Jason Campoli,Shivastuti Koul and Smitha Bangalore Naresh who came together
-                as a team by the twist of fate (mainly Prof. Weintraub's intervention) and contributed to building this
-                mvc dot net based application using their myraid skills.
-                We can proudly say that it's been an amazing journey and we are are bunch of folks who are super
-                easy to work with as long as you go along with all our ideas  and never give us any lip.
-                On a serious note, it's been a hectic journey but the overall experience of working with a real client,
-                gauging our own capabilities and helping each other be a better version of the teammate the person is 
-                currently has been a rewarding experience nonetheless.Lastly in the words of Robert Frost
+                    Forged in the fiery quality oriented class of Managing Software Development,NextMile
+                    brings its idea,creativity and hardwork to the table with this application.We are a team
+                    of three people - Jason Campoli,Shivastuti Koul and Smitha Bangalore Naresh who came together
+                    as a team by the twist of fate (mainly Prof. Weintraub's intervention) and contributed to building this
+                    mvc dot net based application using their myraid skills.
+                    We can proudly say that it's been an amazing journey and we are are bunch of folks who are super
+                    easy to work with as long as you go along with all our ideas  and never give us any lip.
+                    On a serious note, it's been a hectic journey but the overall experience of working with a real client,
+                    gauging our own capabilities and helping each other be a better version of the teammate the person is
+                    currently has been a rewarding experience nonetheless.Lastly in the words of Robert Frost
                 </p>
                 <blockquote> "I took the road less traveled by, and that has made all the difference."</blockquote>
-               
-            </div>
-           
-            
-        </div>
-   </section>
-   
-</body>
 
+            </div>
+
+
+        </div>
+    </section>
+</body>
 
 
 @*Javascript calls*@
