@@ -17,7 +17,7 @@
     <section id="intro" class="intro" data-speed="6" data-type="background">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 well well-sm" >
+                <div class="col-sm-12 well well-sm">
                     <h1 class="searchtitle1"><strong>NEXTMILE</strong>  </h1>
                 </div>
                 <div class="col-sm-12">
@@ -25,15 +25,15 @@
                 </div>
                 <div class="text-center">
                     <a href="#search" class="jumper btn btn-success btn-lg">Continue</a>
-                </div> 
-                
+                </div>
+
             </div>
         </div>
     </section>
 
     <section id="search" class="search" data-speed="4" data-type="background">
         <div class="container">
-            
+
             @* Screen Elements - Drop down for neighborhood locations and the search results in form of push pins on a map.*@
             <div ng-controller="FacebookUserDetailsCtrl" class="container-fluid">
                 @{
@@ -46,7 +46,7 @@
                         </fb:login-button>
                     </div>
                 </div>
-               
+
                 <div id="scroll1"></div>
                 <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
                 <p class="hidden">Facebook User Id: @Session["uid"]</p>
@@ -54,34 +54,40 @@
 
                 <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
                 <div class="row dropdownrow">
-                   
-                        <div class="col-sm-2 div1">
-                            @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                        <div class="col-sm-2 div2">
-                            @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                        <div class="col-sm-2 div3 ">
-                            @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
 
-                        <div class="col-sm-5 div4">
-                            @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
-                        </div>
-                   
+                    <div class="col-sm-2 div1">
+                        @Html.DropDownList("foodTruckName", (SelectList)ViewData["CurrentTrucks"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+                    <div class="col-sm-2 div2">
+                        @Html.DropDownList("mealTime", (SelectList)ViewData["MealTimes"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+                    <div class="col-sm-2 div3 ">
+                        @Html.DropDownList("dayOfWeek", (SelectList)ViewData["DaysInWeek"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+
+                    <div class="col-sm-5 div4">
+                        @Html.DropDownList("neighbourhoodList", (SelectList)ViewData["CurrentNeighborhoods"], new { @class = "form-control", @onchange = "RenderFilteredTrucks(); return false" })
+                    </div>
+
                 </div>
             </div>
             <div id="alert1" class="alert alert-success" style="display:inherit;">
-                    </div>
+            </div>
             <div id="myMap" class="col-sm-12 glib"></div>
             <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
             <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
         </div>
     </section>
     <section id="detail" class="detail" data-speed="6" data-type="background">
+<<<<<<< HEAD
         <div class="container ">
 
             <h1 class="dropdownrow"> The NextMile Team - Our Story</h1>
+=======
+        <div class="container">
+
+            <h1> The NextMile Team - Our Story</h1>
+>>>>>>> 964eea298599b92d684e959487e5914aedcef979
             <div class="panel panel-body">
                 <p>
                     Forged in the fiery quality oriented class of Managing Software Development,NextMile
@@ -101,10 +107,8 @@
 
 
         </div>
-   </section>
-   
+    </section>
 </body>
-
 
 
 @*Javascript calls*@

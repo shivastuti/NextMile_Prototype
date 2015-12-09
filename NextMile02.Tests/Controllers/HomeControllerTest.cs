@@ -1,4 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/*      Copyright (c) 2015
+ *      by NextMile Team(Jason Campoli, Shivastuti Kohl, Smitha Bangalore Naresh), 
+ *      College of Computer and Information Science, Northeastern University, Boston MA
+ *
+ *      This software is the intellectual property of NextMile Team
+ *
+ */
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;

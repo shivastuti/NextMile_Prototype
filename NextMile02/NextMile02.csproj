@@ -158,6 +158,7 @@
     <Content Include="Content\Images\bkgrnd.jpg" />
     <Content Include="Content\Images\Blue_Truck.png" />
     <Content Include="Content\Images\ClusteredTrucks.png" />
+    <Content Include="Content\Images\Current_Loc.png" />
     <Content Include="Content\Images\Downvote.png" />
     <Content Include="Content\Images\food.png" />
     <Content Include="Content\Images\intro1.jpg" />
@@ -229,9 +230,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
-<ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
