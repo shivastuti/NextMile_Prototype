@@ -43,19 +43,17 @@ namespace NextMile02.Controllers
         [HttpGet]
         public ActionResult UserDetails()
         {
-           try
-            {
-                      
+           if(Session["accessToken"] == null)
+           {
+                return View("/Home/Welcome");
+           
+           }       
                 var client = new FacebookClient(Session["accessToken"].ToString());
                 dynamic fbresult = client.Get("me?fields=id,name,picture.type(large)");
                 FacebookUserModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserModel>(fbresult.ToString());
 
                 return View(facebookUser);
-            }
-            catch(Exception e)
-           {
-               return RedirectToAction("Welcome", "Home", e);
-           }
+            
         }
 
         [HttpGet]
