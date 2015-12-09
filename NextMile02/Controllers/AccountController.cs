@@ -22,7 +22,7 @@ namespace NextMile02.Controllers
         {
             Session["uid"]          = model.uid;
             Session["accessToken"]  = model.accessToken;
-            if (Session["flag"] != "0")
+            if ((String)Session["flag"] != "0")
             {
                 Session["flag"] = model.flag;
             }

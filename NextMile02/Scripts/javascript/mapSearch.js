@@ -42,7 +42,7 @@ $(document).ready(function () {
     var AllPushpinInfoData = $("#currentTruckPinData").data("value");
     var mapViewWidth = $("#myMap").width();
     var BingMapKey = $("#BingMapKey").data("value");
-    var mapViewHeight = 400;
+    var mapViewHeight = 550;
     var bestViewPadding = 150;
 
     var mapOptions = {

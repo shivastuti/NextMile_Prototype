@@ -21,7 +21,7 @@ Licence
 			pinSize						: 35,
 			extendMapBoundsBy	: 2,
 			gridSize					: 30,
-			maxZoom						: 18,
+			maxZoom						: 17,
 			clickToZoom: true,
 			pushpinDefaultIcon: '/Content/Images/ClusteredTrucks.png',
 			pushpinBlueIcon		:'/Content/Images/Blue_Truck.png',
