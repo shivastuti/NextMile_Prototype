@@ -158,15 +158,16 @@
     <Content Include="Content\Images\bkgrnd.jpg" />
     <Content Include="Content\Images\Blue_Truck.png" />
     <Content Include="Content\Images\ClusteredTrucks.png" />
-    <Content Include="Content\Images\Current_Loc.png" />
     <Content Include="Content\Images\Downvote.png" />
     <Content Include="Content\Images\food.png" />
     <Content Include="Content\Images\intro1.jpg" />
+    <Content Include="Content\Images\intro.png" />
     <Content Include="Content\Images\Green_Truck.png" />
     <Content Include="Content\Images\Red_Truck.png" />
     <Content Include="Content\Images\up-arrow.png" />
     <Content Include="Content\Images\Upvote.png" />
     <Content Include="Content\pushpin.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -178,7 +179,6 @@
     <Content Include="Content\experiments.css" />
     <Content Include="Content\Mainpage_style.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Content\styles.css" />
     <Content Include="Content\style_screen.css" />
     <Content Include="Content\tes.css" />
     <Content Include="Scripts\javascript\App.js" />
