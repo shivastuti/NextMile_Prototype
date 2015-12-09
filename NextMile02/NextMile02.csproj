@@ -156,7 +156,7 @@
     
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\Curremt_Loc.png" />
+    <Content Include="Content\Images\Current_Loc.png" />
     <Content Include="Content\Images\bkgrnd.jpg" />
     <Content Include="Content\Images\Blue_Truck.png" />
     <Content Include="Content\Images\ClusteredTrucks.png" />
