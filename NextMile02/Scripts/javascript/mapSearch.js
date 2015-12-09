@@ -15,6 +15,10 @@ var pinClusterer = null;
 
 $(document).ready(function () {
 
+    
+        setInterval(function() {
+            getdata();
+        }, 3000);
     // cache the window object
     $window = $(window);
 
@@ -545,6 +549,40 @@ function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
     showCustomMessage(msg + " truck(s) found!");
 
     dropdownListTN.value = selectedTruckName;
+}
+function getdata() {
+    $(function () {
+        $.ajax(
+                               {
+                                   url: "/home/GetPreferencesForUser",
+                                   type: "POST",
+                                   data: {},
+                                   contentType: "application/json; charset=utf-8",
+                                   dataType: "json",
+                                   success: function (res) {
+                                       displaypreferences(res);
+                                   }
+                               });
+    });
+}
+function displaypreferences(data) {
+    console.log(data);
+    var truckList = data.PreferenceData;
+    console.log(truckList);
+    $('#result').empty();
+    $('#result1').empty();
+    $.each(truckList, function (index, truckPreferenceData) {
+        console.log(truckPreferenceData);
+        if (truckPreferenceData.preference == 1) {
+            
+            $('#result').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
+        }
+        else if (truckPreferenceData.preference == 2) {
+            
+            $('#result1').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
+        }
+
+    });
 }
 
 function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighborhood) {

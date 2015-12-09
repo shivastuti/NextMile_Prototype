@@ -111,37 +111,7 @@ function InitialiseFacebook(appId)
         return false;
     })(jQuery);
 
-    $(function()
-    {
-        $.ajax(
-                               {
-                                   url: "/home/GetPreferencesForUser",
-                                   type: "POST",
-                                   data: {},
-                                   contentType: "application/json; charset=utf-8",
-                                   dataType: "json",
-                                   success: function (res) {
-                                       displaypreferences(res);
-                                }
-                               });
-    });    
-    function displaypreferences(data)
-    {
-        console.log(data);
-        var truckList = data.PreferenceData;
-        console.log(truckList);
-        $('#result').empty();
-        $.each(truckList, function (index, truckPreferenceData) {
-            console.log(truckPreferenceData);
-            if(truckPreferenceData.preference == 1)
-                $('#result').append($('<ul>').append( truckPreferenceData.truckname + '</p>'));
-            else  if(truckPreferenceData.preference == 2)
-                $('#result1').append($('<ul>').append( truckPreferenceData.truckname + '</p>'));
-
-
-        });
-    }
-    
+   
       
     var amountScrolled = 300;
 
