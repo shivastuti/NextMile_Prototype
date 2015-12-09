@@ -160,8 +160,8 @@
     <Content Include="Content\Images\ClusteredTrucks.png" />
     <Content Include="Content\Images\Downvote.png" />
     <Content Include="Content\Images\food.png" />
+    <Content Include="Content\Images\intro1.jpg" />
     <Content Include="Content\Images\Green_Truck.png" />
-    <Content Include="Content\Images\intro.jpg" />
     <Content Include="Content\Images\Red_Truck.png" />
     <Content Include="Content\Images\up-arrow.png" />
     <Content Include="Content\Images\Upvote.png" />
