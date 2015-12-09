@@ -378,7 +378,7 @@ function associateWebsiteToTitle(infoBoxDescription, infobox) {
     }
     if(website != ''){
         infobox.setOptions({
-            titleClickHandler: function () { window.open(website,'_blank'); }
+            titleClickHandler: function () { window.open(website,'_blank'); return false }
             });
     }
 }
