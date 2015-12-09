@@ -181,6 +181,7 @@
     <Content Include="Content\style.css" />
     <Content Include="Content\style_screen.css" />
     <Content Include="Content\tes.css" />
+    <Content Include="QUnitTests\mapSearchTest.js" />
     <Content Include="Scripts\javascript\App.js" />
     <Content Include="Scripts\javascript\bootstrap.js" />
     <Content Include="Scripts\javascript\bootstrap.min.js" />
@@ -226,6 +227,7 @@
     <Content Include="Scripts\javascript\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\UserDetails.cshtml" />
     <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Home\IndexTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
