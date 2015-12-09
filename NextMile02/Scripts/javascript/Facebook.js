@@ -104,23 +104,51 @@ function InitialiseFacebook(appId)
     });
     (function () {
         var infoModal = $('#preferences');
-        $('.modal-toggle').on('click', function () {
-            $.ajax({
+        $('#preferences').on('click', function () {
+
+         /*   $.ajax({
                 type: "GET",
                 url: '/home/GetPreferencesForUser/' + $(this).data(),
                 dataType: 'json',
-                error: function (data) {
-                    var htmlData = '<ul><li>';
-                    htmlData += data.id;
-                    htmlData += '</li></ul>';
-                    infoModal.find('#modal-body')[0].innerHTML = htmlData;
-                    infoModal.modal();
-                }
-            });
+                
+            });*/
+            $("#result").text("hi from the javascript")
         });
         return false;
     })(jQuery);
 
+    $(function()
+    {
+        $.ajax(
+                               {
+                                   url: "/home/GetPreferencesForUser",
+                                   type: "POST",
+                                   data: {},
+                                   contentType: "application/json; charset=utf-8",
+                                   dataType: "json",
+                                   success: function (res) {
+                                       displaypreferences(res);
+                                }
+                               });
+    });    
+    function displaypreferences(data)
+    {
+        console.log(data);
+        var truckList = data.PreferenceData;
+        console.log(truckList);
+        $('#result').empty();
+        $.each(truckList, function (index, truckPreferenceData) {
+            console.log(truckPreferenceData);
+            if(truckPreferenceData.preference == 1)
+                $('#result').append($('<ul>').append( truckPreferenceData.truckname + '</p>'));
+            else  if(truckPreferenceData.preference == 2)
+                $('#result1').append($('<ul>').append( truckPreferenceData.truckname + '</p>'));
+
+
+        });
+    }
+    
+      
     var amountScrolled = 300;
 
     $(window).scroll(function () {

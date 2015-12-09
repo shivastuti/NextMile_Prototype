@@ -160,7 +160,7 @@ display: none;
    -------------------------------------- */
 
 #intro { 
-    background: url('/Content/Images/intro.png') 50% 0 fixed; 
+    background: url("/Content/Images/intro.png") 50% 0 fixed; 
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
@@ -189,7 +189,7 @@ a.back-to-top {
 	border-radius: 30px;
 }
 #search { 
-    background: url('/Content/Images/home.jpg') 50% 0 fixed; 
+    background: url("/Content/Images/.png") 50% 0 fixed; 
     height: auto;  
     margin: 4% auto; 
     width: 100%; 
@@ -199,7 +199,7 @@ a.back-to-top {
 }
 
 #detail { 
-    background: url('/Content/Images/about.png') 50% 0 fixed; 
+    background: url("/Content/Images/.png") 50% 0 fixed; 
     height: auto;
     margin: 4% auto; 
     width: 100%; 
@@ -459,5 +459,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 }
 .foot{
         background-color: black;
-    color: bisque
+    color: bisque;
+    padding:1%;
 }

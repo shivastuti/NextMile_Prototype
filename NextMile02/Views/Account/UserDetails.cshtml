@@ -15,10 +15,10 @@
                     <h2 class="pull-left">Welcome! @Model.name</h2>
                    
                      <button type="button" class="btn btn-success top" data-toggle="modal" data-target="#preferences" >View Preferences</button>
-                     <button type="button" class="btn btn-success top">Contact us</button>
+                     
 
                 </div>
-
+                
                 <a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src='@Model.picture.data.url'></a>
             </div>
         </div>
@@ -32,7 +32,32 @@
                     <h4 class="modal-title" id="exampleModalLabel">User Preferences</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="result" id="result" value="" />
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Yummy Food Trucks</div>
+                                <div class="panel-body">
+                                    <div class="panel-info" id="result">
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Not Yummy Food Trucks</div>
+                                <div class="panel-body">
+                                    <div class="panel-info" id="result1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                   
+
+                        
                          </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

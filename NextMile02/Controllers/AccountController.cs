@@ -16,13 +16,7 @@ namespace NextMile02.Controllers
             return View();
         }
 
-        // NOTE: We don't think this is being called.  We might be wrong.
-        //public ActionResult PassUidtoHomeController()
-        //{
-        //    String uid = getUid();
-        //    return RedirectToAction("IndexForLoggedInUser", "Home", new { userId = uid });
-        //}
-
+       
         [HttpPost]
         public JsonResult login(FacebookLoginModel model)
         {
