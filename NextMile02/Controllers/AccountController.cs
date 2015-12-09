@@ -15,8 +15,7 @@ namespace NextMile02.Controllers
         {
             return View();
         }
-
-       
+              
         [HttpPost]
         public JsonResult login(FacebookLoginModel model)
         {
@@ -25,8 +24,11 @@ namespace NextMile02.Controllers
             if (Session["flag"] != "0")
             {
                 Session["flag"] = model.flag;
+               
             }
-            return Json(new {success = true});
+           
+            return Json(new { success = true });
+            
         }
 
         [HttpPost]
@@ -41,15 +43,19 @@ namespace NextMile02.Controllers
         [HttpGet]
         public ActionResult UserDetails()
         {
-            if (Session["accessToken"] == null)
+           try
             {
-                return View("Welcome",ViewBag);
-            }
-            var client = new FacebookClient(Session["accessToken"].ToString());
-            dynamic fbresult = client.Get("me?fields=id,name,picture.type(large)");
-            FacebookUserModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserModel>(fbresult.ToString());
+                      
+                var client = new FacebookClient(Session["accessToken"].ToString());
+                dynamic fbresult = client.Get("me?fields=id,name,picture.type(large)");
+                FacebookUserModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserModel>(fbresult.ToString());
 
-            return View(facebookUser);
+                return View(facebookUser);
+            }
+            catch(Exception e)
+           {
+               return RedirectToAction("Welcome", "Home", e);
+           }
         }
 
         [HttpGet]

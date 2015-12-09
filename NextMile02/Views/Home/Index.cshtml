@@ -50,7 +50,7 @@
                 <div id="scroll1"></div>
                 <p class="hidden">Facebook Access Token: @Session["accessToken"]</p>
                 <p class="hidden">Facebook User Id: @Session["uid"]</p>
-                <p class="hidden">Flag : @Session["flag"] </p>
+                <p id="flag" class="hidden" >Flag : @Session["flag"] </p>
 
                 <div ng-include="'/Account/UserDetails'" ng-show='@Session["flag"] == 0'></div>
                 <div class="row dropdownrow">
@@ -73,7 +73,7 @@
             </div>
             <div id="alert1" class="alert alert-success" style="display:inherit;">
             </div>
-            <div id="myMap" class="col-sm-12 glib"></div>
+            <div id="myMap" class="col-sm-12"></div>
             <input type="hidden" id="currentTruckPinData" data-value="@ViewData["CurrentTruckPins"]" />
             <input type="hidden" id="BingMapKey" data-value="@System.Configuration.ConfigurationManager.AppSettings["BING_MAP_KEY"]" />
         </div>
