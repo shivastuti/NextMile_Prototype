@@ -56,6 +56,7 @@ margin-top: 0;
 .topgap {
     margin-top: 20px;
 }
+
 paddingcs{
     padding:20px;
 }
@@ -173,8 +174,19 @@ display: none;
 .dropdownrow{
     margin-left: 1% !important;
 }
+.topshift{
+    margin-left: 2%;
+}
+.btn-group-vertical > button{
+    margin-bottom:10px;
+    border-radius:10px !important;
+}
 .alert2{
     margin-left: 3% !important;
+}
+.align{
+    text-align: justify;
+    text-justify: inter-word;
 }
 a.back-to-top {
 	display: none;
@@ -191,7 +203,7 @@ a.back-to-top {
 	border-radius: 30px;
 }
 #search { 
-    background: url("/Content/Images/.png") 50% 0 fixed; 
+    background:  50% 0 fixed; 
     height: auto;  
     margin: 4% auto; 
     width: 100%; 
@@ -199,7 +211,9 @@ a.back-to-top {
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     padding: 2% 0;
 }
-
+.jumbotron{
+    padding : 3% !important;
+}
 #detail { 
     background: url("/Content/Images/.png") 50% 0 fixed; 
     height: auto;
@@ -305,6 +319,10 @@ and (max-device-width : 480px) {
  #myMap > div{
     max-width:100%;
 }
+
+ #profilepic{
+     visibility:hidden;
+ }
    
  .div1,.div2,.div3,.div4{
       float:none;
@@ -324,6 +342,8 @@ and (min-width : 321px) {
  #myMap > div{
     max-width:100%;
 }
+
+  
     .div1,.div2,.div3,.div4{
       float:none;
       width:100%;
@@ -343,6 +363,9 @@ and (max-width : 320px) {
  #myMap > div{
     max-width:100%;
 }
+  #profilepic{
+     visibility:hidden;
+ }
     .div1,.div2,.div3,.div4{
       float:none;
       width:100%;
@@ -424,7 +447,9 @@ and (min-width : 1224px) {
  #myMap > div{
     max-width:100%;
 }
-   
+   #profilepic{
+       margin-left:35%;
+   }
    
     #indexcontainer{
         margin-top:40px;

@@ -103,16 +103,10 @@ function InitialiseFacebook(appId)
 
     });
     (function () {
-        var infoModal = $('#preferences');
-        $('#preferences').on('click', function () {
+        var infoModal = $('#contact');
+        $('#contact').on('click', function () {
 
-         /*   $.ajax({
-                type: "GET",
-                url: '/home/GetPreferencesForUser/' + $(this).data(),
-                dataType: 'json',
-                
-            });*/
-            $("#result").text("hi from the javascript")
+        
         });
         return false;
     })(jQuery);

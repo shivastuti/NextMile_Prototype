@@ -4,73 +4,99 @@
 }
 @{
     ViewBag.Title = "UserDetails";
-    
+
 }
 
 <div id="partialPlaceHolder">
     <div class="container target  jumbotron" style="background-color: rgba(0,0,0,0.5); color: whitesmoke;">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="col-sm-5">
-                    <h2 class="pull-left">Welcome! @Model.name</h2>
-                   
-                     <button type="button" class="btn btn-success top" data-toggle="modal" data-target="#preferences" >View Preferences</button>
-                     
 
+            <div class="col-sm-12">
+                <div class="h2 col-sm-8 pull-left topshift">Welcome! @Model.name</div>
+                <div class="col-sm-4 pull-right">
+                    <a href="#"><img id="profilepic" title="profile image" class="img-circle img-responsive" src='@Model.picture.data.url'></a>
                 </div>
-                
-                <a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src='@Model.picture.data.url'></a>
             </div>
+            <div class="col-sm-12">
+                <button type="button" class="col-sm-5 alert2 glibc btn btn-success" data-toggle="modal" data-target="#preferences"><span>View Preferences</span></button>
+                <button type="button" class="col-sm-5 alert2 topgap btn btn-success" data-toggle="modal" data-target="#contact"><span>Help and Support</span></button>
+            </div>
+
+
+
         </div>
 
+
+
+
+
+
     </div>
-    <div class="modal fade" id="preferences" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">User Preferences</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">Yummy Food Trucks</div>
-                                <div class="panel-body">
-                                    <div class="panel-info" id="result">
-                                    </div>
-                                
-                                </div>
-                            </div>
+</div>
+<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Help and Support</h4>
+            </div>
+            <div class="modal-body">
+                <b>  For technical support, please contact:<br /></b><br />
+                Jason Campoli - campoli.j@husky.neu.edu  <br />
+                Shivastuti Koul - koul.sh@husky.neu.edu <br />
+                Smitha Bangalore Naresh - bangalorenaresh.s@husky.neu.edu </br>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">Not Yummy Food Trucks</div>
-                                <div class="panel-body">
-                                    <div class="panel-info" id="result1">
+                    </div>
+                    </div>
+    </div>
+
+                    <div class="modal fade" id="preferences" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="exampleModalLabel">User Preferences</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Yummy Food Trucks</div>
+                                                <div class="panel-body">
+                                                    <div class="panel-info" id="result">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Not So Yummy Food Trucks</div>
+                                                <div class="panel-body">
+                                                    <div class="panel-info" id="result1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    
-                   
-
-                        
-                         </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-@*Javascript calls*@
-<script src="~/Scripts/javascript/jquery-1.10.2.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+                
+                @*Javascript calls*@
+                <script src="~/Scripts/javascript/jquery-1.10.2.js"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 
 
