@@ -1,0 +1,466 @@
+
+/*Custom CSS
+=============
+
+Author:  shivastuti koul
+Updated: November 2015
+Notes:	 Hand coded for NextMile
+*/  
+
+html,body{
+    overflow-x: hidden;
+    
+    
+}  
+
+#features {
+    text-align: center;
+}
+    #features img {
+        margin: 0 0 20px;
+    }
+
+
+/* --------------------------------------
+   Typography
+   -------------------------------------- */
+
+
+.well .page-header {
+margin-top: 0;
+}
+    .well .page-header h1 {
+        margin-top: 0;
+    }
+    .well{
+    background-color: rgba(0,0,0,0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+    .pad{
+        padding: 40px;
+    }
+/* --------------------------------------
+   Navbar
+   -------------------------------------- */
+
+#searchInput {
+    width: 200px;
+}
+
+.glib {
+    margin-top: 60px;
+}
+.glibc {
+    margin-top: 80px;
+}
+.topgap {
+    margin-top: 20px;
+}
+paddingcs{
+    padding:20px;
+}
+#fblogin > div
+{
+
+padding-top :60px;
+}
+#form1 {
+    margin-top: 100px;
+}
+
+.tab {
+    padding: 10px;
+}
+   
+
+/* Login page css*/
+
+
+/*
+    Note: It is best to use a less version of this file ( see http://css2less.cc
+    For the media queries use @screen-sm-min instead of 768px.
+    For .omb_spanOr use @body-bg instead of white.
+*/
+
+
+
+
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
+}
+	
+.omb_login .omb_socialButtons a {
+	color: white; 
+	opacity:0.9;
+
+}
+
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;    	
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+.omb_login .omb_loginOr {
+	position: relative;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}			
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+	
+
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+.alert {
+margin-top: 20px;
+display: none;
+}
+.well {
+    margin: 20px 0;
+
+}
+
+
+        
+/* --------------------------------------
+   Media Queries
+   -------------------------------------- */
+
+#intro { 
+
+    background: url("/Content/Images/intro.png") 50% 0 fixed; 
+
+    height: auto;  
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 100px 0;
+}
+.dropdownrow{
+    margin-left: 1% !important;
+}
+.alert2{
+    margin-left: 3% !important;
+}
+a.back-to-top {
+	display: none;
+	width: 60px;
+	height: 60px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 999;
+	right: 20px;
+	bottom: 20px;
+	background: #27AE61 url("/Content/Images/up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+#search { 
+    background: url("/Content/Images/.png") 50% 0 fixed; 
+    height: auto;  
+    margin: 4% auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 2% 0;
+}
+
+#detail { 
+    background: url("/Content/Images/.png") 50% 0 fixed; 
+    height: auto;
+    margin: 4% auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 2% 0;
+    color: black;
+}
+blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px;
+  margin: 0 0 20px;
+  position: relative;
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+  
+  /*Borders - (Optional)*/
+  border-left: 15px solid #c76c0c;
+  border-right: 2px solid #c76c0c;
+  
+  /*Box Shadow - (Optional)*/
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #999;
+  
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}
+h1{
+     word-wrap: break-word;
+     -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+     -ms-hyphens: auto;
+     -o-hyphens: auto;
+     hyphens: auto;
+}
+.searchtitle1{
+    padding: .2%;
+    margin: 15px 20px;
+    color: white; 
+    font-size: 90px; 
+    max-width:100%;
+    text-align: center;
+    text-shadow: 0 0 15px black, 0 0 25px black, 0 0 35px black;
+}
+.searchtitle{
+    padding: .2%;
+    margin: 80px 0;
+    color: white; 
+    font-size: 36px; 
+    text-align: center;
+    text-shadow: 0 0 15px black, 0 0 25px black, 0 0 35px black;
+}
+#myMap > div{
+    max-width:100%;
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+ .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+    .div1,.div2,.div3,.div4{
+      float:none;
+      width:100%;
+      margin-bottom:5px
+ }
+  
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+ #myMap > div{
+    max-width:100%;
+}
+   
+   
+    #indexcontainer{
+        margin-top:40px;
+    }
+}
+.foot{
+        background-color: black;
+    color: bisque;
+    padding:1%;
+}
