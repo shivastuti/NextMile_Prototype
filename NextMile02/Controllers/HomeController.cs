@@ -334,5 +334,48 @@ namespace NextMile02.Controllers
         {
             return View("Welcome", ViewBag);
         }
+
+        //Testing javascript and views for QUnit testing
+        public ViewResult IndexTest()
+        {
+            // Arrange
+            List<Models.TruckEvent> testEvents = new List<TruckEvent>()
+            {
+                new TruckEvent() { 
+                    Name = "TestTruck1",
+                    Url = "www.testtruck1.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "NEU, on Opera Place at Huntington Ave",
+                    Coordinates = new Location("42.3398106,-71.0913604")
+                },
+                    new TruckEvent() { 
+                    Name = "TestTruck2",
+                    Url = "www.testtruck2.com",
+                    Day = "Friday",
+                    Time = "Lunch",
+                    Neighborhood = "SoWa Open Market, 500 Harrison Avenue",
+                    Coordinates = new Location("42.3425311,-71.0674873")
+                },
+            };
+
+
+            List<Models.TruckPushpinInfo> testPushpinInfo = new List<TruckPushpinInfo>()
+            {
+                    new TruckPushpinInfo(testEvents[0]),
+                    new TruckPushpinInfo(testEvents[1])               
+            };
+
+            List<String> currentNeighborhoods = getNeighborhoodList(testEvents);
+            List<String> currentTrucknames = getTruckNameList(testEvents);
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();            
+            ViewData["CurrentTruckPins"] = serializer.Serialize(testPushpinInfo);
+            ViewData["CurrentNeighborhoods"] = new SelectList(currentNeighborhoods, Constants.AllNeighborhoodsString);
+            ViewData["CurrentTrucks"] = new SelectList(currentTrucknames, Constants.AllTrucksString);
+            ViewData["MealTimes"] = new SelectList(new[] { "Breakfast", "Lunch", "Dinner", "Late Night" }, "Lunch");
+            ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, "Wednesday");
+            return View("IndexTest", ViewBag);
+        }
     }
 }
