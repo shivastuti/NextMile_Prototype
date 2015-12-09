@@ -61,43 +61,52 @@ namespace NextMile02.Controllers
             String day = setDay;
             String meal = setMeal;
 
-            // Obtain list of current events
-            var currentEvents = getCurrentEvents(ref day, ref meal);
-
-            List<Models.TruckPushpinInfo> currentTruckPins = null;
-
-            if (userid != null)
+            try
             {
 
-                // Obtain User Preferences
-                var preferences = _preferenceStore.GetPreferencesForUser(userid);
+                // Obtain list of current events based on date and time.
+                var currentEvents = getCurrentEvents(ref day, ref meal);
 
-                // Obtain list of current Truck PushPins for view, left-outer join with user preferences
-                currentTruckPins = (from te in currentEvents
-                                    join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
-                                    from profile in tempjoin.DefaultIfEmpty()
-                                    select new Models.TruckPushpinInfo(te, profile == null ? null : profile.preference)).ToList();
+                List<Models.TruckPushpinInfo> currentTruckPins = null;
+
+                if (userid != null)
+                {
+
+                    // Obtain User Preferences
+                    var preferences = _preferenceStore.GetPreferencesForUser(userid);
+
+                    // Obtain list of current Truck PushPins for view, left-outer join with user preferences
+                    currentTruckPins = (from te in currentEvents
+                                        join trucktemp in preferences on te.Name equals trucktemp.truckname into tempjoin
+                                        from profile in tempjoin.DefaultIfEmpty()
+                                        select new Models.TruckPushpinInfo(te, profile == null ? null : profile.preference)).ToList();
+                }
+                else
+                {
+                    // Obtain list of current Truck PushPins for view
+                    currentTruckPins = (from te in currentEvents
+                                        select new Models.TruckPushpinInfo(te)).ToList();
+                }
+
+                List<String> currentNeighborhoods = getNeighborhoodList(currentEvents);
+
+                List<String> currentTrucknames = getTruckNameList(currentEvents);
+
+                currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                ViewData["CurrentTruckPins"] = serializer.Serialize(currentTruckPins);
+                ViewData["CurrentNeighborhoods"] = new SelectList(currentNeighborhoods, Constants.AllNeighborhoodsString);
+                ViewData["CurrentTrucks"] = new SelectList(currentTrucknames, Constants.AllTrucksString);
+                ViewData["MealTimes"] = new SelectList(new[] { "Breakfast", "Lunch", "Dinner", "Late Night" }, meal);
+                ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, day);
+                return View("Index", ViewData);
             }
-            else
+            catch (Exception e)
             {
-                // Obtain list of current Truck PushPins for view
-                currentTruckPins = (from te in currentEvents
-                                    select new Models.TruckPushpinInfo(te)).ToList();
+                ViewData["ErrorDetail"] = e.Message;
+                return View("Error", ViewData);
             }
-
-            List<String> currentNeighborhoods = getNeighborhoodList(currentEvents);
-
-            List<String> currentTrucknames = getTruckNameList(currentEvents);
-
-            currentTruckPins = OffsetLatitudeToEachTruckWithSameLoc(currentTruckPins);
-
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            ViewData["CurrentTruckPins"] = serializer.Serialize(currentTruckPins);
-            ViewData["CurrentNeighborhoods"] = new SelectList(currentNeighborhoods, Constants.AllNeighborhoodsString);
-            ViewData["CurrentTrucks"] = new SelectList(currentTrucknames, Constants.AllTrucksString);
-            ViewData["MealTimes"] = new SelectList(new[] { "Breakfast", "Lunch", "Dinner", "Late Night" }, meal);
-            ViewData["DaysInWeek"] = new SelectList(new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, day);
-            return View("Index", ViewData);
         }
 
         private static List<String> getTruckNameList(List<TruckEvent> currentEvents)

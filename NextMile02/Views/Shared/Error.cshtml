@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -10,8 +10,10 @@
 </head>
 <body>
     <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
+        <h1><br><br>Uh oh.</h1>
+        <h2>NextMile has encountered an error in one of its dependent services.</h2>
+        <h2>See the below error message for more info:</h2>
+        <h3><t>@ViewData["ErrorDetail"]</h3>
     </hgroup>
 </body>
 </html>
