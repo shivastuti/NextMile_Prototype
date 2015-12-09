@@ -51,7 +51,7 @@ NextMile02\
 NextMile02.Tests\
   NextMile02.Tests.csproj	Project containing the NextMile Web Application unit tests
   
-
+NextMile_FinalInstaller		Installation package for the application
 
 ##############################################################################
 Part 2: Operating Instructions
@@ -61,7 +61,29 @@ Part 2: Operating Instructions
 ##############################################################################
 Part 3: Management Instructions
 ------------------------------------------------------------------------------
-[ @Shiva: Please update this section ]
+General Application Installation(using an executable file) - 
+- Nextmile can be run locally on any machine that supports Visual Studio 4.5.
+- Run the setup.exe file at the below location in the package to install the application on your machine
+NextMile_Prototype\NextMile_FinalInstaller\NextMile_FinalInstaller\Express\DVD-5\DiskImages\DISK1
+------------------------------------------------------------------------------
+Common issues encountered 
+
+1. Install Shield may be missing - Please download it from http://installshield-professional.en.softonic.com/
+2. Some machines may encounter a failure in deployment of the application.This may happen due to the 
+following reasons - 
+	- WMSvc Service (Web Management Service) is not started - Please make sure that it is
+	  set to 'Auto' (and started) so it's on when you restart 
+	- IIS7 is not installed - To install IIS to serve static content
+		a. Click the Start button , click Control Panel, click Programs, and then click Turn Windows features on or off. ...
+		b. In the list of Windows features, select Internet Information Services, and then click OK.
+
+From a developer's standpoint, while deploying this application locally - 
+1. Right click on the solution file in the Solution explorer.
+2. Select Clean from the drop down menu.
+3. After cleaning the project,again right click on the solution file and click on build
+4. This triggers a local build of the applicaiton on the IIS server (Visual Studio).
+ - The results/output of a build can be viewed in the output view (Got to View -> Output )
+ - After a successful build the applicaiton is deployed on the localhost of the default browser that you set in Visual studio
 
 
 ##############################################################################
