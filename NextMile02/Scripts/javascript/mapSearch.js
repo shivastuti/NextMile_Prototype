@@ -15,10 +15,10 @@ var pinClusterer = null;
 
 $(document).ready(function () {
 
-    
-        setInterval(function() {
-            getdata();
-        }, 3000);
+
+    setInterval(function () {
+        getdata();
+    }, 3000);
     // cache the window object
     $window = $(window);
 
@@ -345,9 +345,9 @@ function renderMap(PushpinInfoData) {
 function displayInfoboxSettings(pushpin) {
     var infoBoxWidth = 275;
     var infoBoxHeight = 135;
-    var infoBoxDesciption = pushpin.Description;
+    var infoBoxDescription = pushpin.Description;
     var infoBoxTitle = pushpin.Title;
-    var strLength = infoBoxDesciption.length + infoBoxTitle.length;
+    var strLength = infoBoxDescription.length + infoBoxTitle.length;
 
     if (strLength > 70)
         infoBoxHeight = 160;
@@ -356,15 +356,31 @@ function displayInfoboxSettings(pushpin) {
     else if (strLength > 120)
         infoBoxHeight = 270;
 
-    var pix = map.tryLocationToPixel(pushpin.getLocation(), Microsoft.Maps.PixelReference.control);
     infobox.setLocation(pushpin.getLocation());
     infobox.setOptions({
-        visible: true, title: infoBoxTitle, description: infoBoxDesciption, width: infoBoxWidth, height: infoBoxHeight,
+        visible: true, title: infoBoxTitle, description: infoBoxDescription, width: infoBoxWidth, height: infoBoxHeight,
         offset: new Microsoft.Maps.Point(0, 25),
+        titleClickHandler: null,
         actions: [{ label: '<div id="Upvote"><img class="Image" src="/Content/Images/Upvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "1"); mouseEvent.preventDefault(); return false } },
         { label: '<div id="Downvote"><img class="Image" src="/Content/Images/Downvote.png" /></div>', eventHandler: function (mouseEvent) { btnVoteHandler(pushpin, "2"); mouseEvent.preventDefault(); return false } }
         ]
     });
+
+    associateWebsiteToTitle(infoBoxDescription, infobox);
+}
+
+//links title of infobox to website of food truck
+function associateWebsiteToTitle(infoBoxDescription, infobox) {
+    var websiteStart = infoBoxDescription.search("http");
+    var website = '';
+    if (websiteStart != -1) {
+        website = infoBoxDescription.substring(websiteStart);
+    }
+    if(website != ''){
+        infobox.setOptions({
+            titleClickHandler: function () { window.open(website,'_blank'); }
+            });
+    }
 }
 
 function displayInfobox(pushpin) {
@@ -428,7 +444,6 @@ function hideInfobox() {
     }*/
 }
 
-
 //function to Upvote or Downvote a truck
 function btnVoteHandler(pushpin, vote) {
     var truckName = pushpin.Title;
@@ -454,7 +469,6 @@ function showCustomMessage(message) {
 
     $('#alert1').html("Status:   " + message).fadeIn().delay(3000).fadeOut();
 }
-
 
 
 $('.close').click(function () {
@@ -484,6 +498,7 @@ function changePushPinColor(pushpin, data) {
     }
 }
 
+//Filtering trucks based on user selection in dropdown
 function RenderFilteredTrucks() {
     var dropListNeighborhood = document.getElementById('neighbourhoodList');
     var neighborhoodSelected = dropListNeighborhood.options[dropListNeighborhood.selectedIndex].value;
@@ -550,40 +565,6 @@ function populateTruckNameDropDownList(FilteredTrucks, selectedTruckName) {
 
     dropdownListTN.value = selectedTruckName;
 }
-function getdata() {
-    $(function () {
-        $.ajax(
-                               {
-                                   url: "/home/GetPreferencesForUser",
-                                   type: "POST",
-                                   data: {},
-                                   contentType: "application/json; charset=utf-8",
-                                   dataType: "json",
-                                   success: function (res) {
-                                       displaypreferences(res);
-                                   }
-                               });
-    });
-}
-function displaypreferences(data) {
-    console.log(data);
-    var truckList = data.PreferenceData;
-    console.log(truckList);
-    $('#result').empty();
-    $('#result1').empty();
-    $.each(truckList, function (index, truckPreferenceData) {
-        console.log(truckPreferenceData);
-        if (truckPreferenceData.preference == 1) {
-            
-            $('#result').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
-        }
-        else if (truckPreferenceData.preference == 2) {
-            
-            $('#result1').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
-        }
-
-    });
-}
 
 function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighborhood) {
     var dropdownListNeighborhood = document.getElementById('neighbourhoodList');
@@ -604,3 +585,37 @@ function populateNeighborhoodDropDownList(FilteredNeighborhood, selectedNeighbor
     }
     dropdownListNeighborhood.value = selectedNeighborhood;
 }
+
+//Fetching User Preferences
+function getdata() {
+    $(function () {
+        $.ajax(
+                {
+                    url: "/home/GetPreferencesForUser",
+                    type: "POST",
+                    data: {},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (res) {
+                        displaypreferences(res);
+                    }
+                });
+    });
+}
+function displaypreferences(data) {
+    var truckList = data.PreferenceData;
+    $('#result').empty();
+    $('#result1').empty();
+    $.each(truckList, function (index, truckPreferenceData) {
+        if (truckPreferenceData.preference == 1) {
+
+            $('#result').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
+        }
+        else if (truckPreferenceData.preference == 2) {
+
+            $('#result1').append($('<ul>').append(truckPreferenceData.truckname + '</p>'));
+        }
+
+    });
+}
+
