@@ -9,7 +9,7 @@ Notes:	 Hand coded for NextMile
 
 html,body{
     overflow-x: hidden;
-    
+   background: url("http://stevenkelly.com.au/wp-content/uploads/2014/09/Private-Dance-Lessons-Background-Parallax.jpg") 50% 0 fixed; 
     
 }  
 
@@ -204,6 +204,7 @@ a.back-to-top {
 }
 #search { 
     background:  50% 0 fixed; 
+     background-color: oldlace ;
     height: auto;  
     margin: 4% auto; 
     width: 100%; 
@@ -216,6 +217,7 @@ a.back-to-top {
 }
 #detail { 
     background:  50% 0 fixed; 
+     background-color: oldlace ;
     height: auto;
     margin: 4% auto; 
     width: 100%; 
