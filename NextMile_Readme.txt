@@ -104,5 +104,9 @@ framework: Controller/Model Unit Tests and View Unit Tests.
     To open Test Explorer, select "TEST" -> "Windows" -> "Test Explorer".
 
 4b. To Run View Unit Tests:
-[ @Smitha: Please update this section]
-
+ *  QUnit framework is used for testing Javascript and Views. QUnitTests are placed
+    under QUnitTests folder and IndexTest View  which is a replica of Index page is 
+    created under views and also associated with IndexTest Controller to pass test data on this 
+    page load. Extra thing in this file is addition of qunit related div
+    for the test to run automatically.
+ *  Goto to index page/Home/IndexTest to run all the tests and see the results.

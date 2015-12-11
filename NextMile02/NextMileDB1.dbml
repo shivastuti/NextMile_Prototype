@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="jcampoli" Class="NextMileDB1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
    <!--<Connection Mode="WebSettings" ConnectionString="Data Source=127.0.0.1;Initial Catalog=jcampoli;User ID=jcampoli;Connect Timeout=60" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="jcampoliConnectionString" Provider="System.Data.SqlClient" />-->
-  <Connection Mode="WebSettings" ConnectionString="Data Source=ec2-52-26-71-96.us-west-2.compute.amazonaws.com;Initial Catalog=Nextmile02;User ID=nextmile;Connect Timeout=60" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Nextmile02" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=25cc070b-4605-4a1b-b81b-a561014a17ed.sqlserver.sequelizer.com;Initial Catalog=db25cc070b46054a1bb81ba561014a17ed;User ID=rjdmsiqqpqhmkjzh;Connect Timeout=60" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="db25cc070b46054a1bb81ba561014a17ed" Provider="System.Data.SqlClient" />
   <Table Name="dbo.UserProfileTest1" Member="UserProfileTest1s">
     <Type Name="UserProfileTest1">
       <Column Name="Id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
